@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		488ACDC52D2952160086AE8A /* FFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 488ACDC22D2952160086AE8A /* FFL.txt */; };
+		488ACDC62D2952160086AE8A /* ClashDisplay-Variable.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 488ACDBF2D2952160086AE8A /* ClashDisplay-Variable.ttf */; };
+		488ACDFC2D2A9B8C0086AE8A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 488ACDFB2D2A9B8C0086AE8A /* Lottie */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		4893C5BB2D288401002D8C10 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,14 +30,29 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		488ACDBF2D2952160086AE8A /* ClashDisplay-Variable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ClashDisplay-Variable.ttf"; sourceTree = "<group>"; };
+		488ACDC22D2952160086AE8A /* FFL.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFL.txt; sourceTree = "<group>"; };
 		4893C5A82D2883FE002D8C10 /* WhatIAmToDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhatIAmToDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4893C5BA2D288401002D8C10 /* WhatIAmToDoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhatIAmToDoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4893C5C42D288401002D8C10 /* WhatIAmToDoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhatIAmToDoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		488ACDCC2D2958C50086AE8A /* Exceptions for "WhatIAmToDo" folder in "WhatIAmToDo" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 4893C5A72D2883FE002D8C10 /* WhatIAmToDo */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4893C5AA2D2883FE002D8C10 /* WhatIAmToDo */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				488ACDCC2D2958C50086AE8A /* Exceptions for "WhatIAmToDo" folder in "WhatIAmToDo" target */,
+			);
 			path = WhatIAmToDo;
 			sourceTree = "<group>";
 		};
@@ -52,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				488ACDFC2D2A9B8C0086AE8A /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +94,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		488ACDC02D2952160086AE8A /* TTF */ = {
+			isa = PBXGroup;
+			children = (
+				488ACDBF2D2952160086AE8A /* ClashDisplay-Variable.ttf */,
+			);
+			path = TTF;
+			sourceTree = "<group>";
+		};
+		488ACDC12D2952160086AE8A /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				488ACDC02D2952160086AE8A /* TTF */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		488ACDC32D2952160086AE8A /* License */ = {
+			isa = PBXGroup;
+			children = (
+				488ACDC22D2952160086AE8A /* FFL.txt */,
+			);
+			path = License;
+			sourceTree = "<group>";
+		};
+		488ACDC42D2952160086AE8A /* ClashDisplay_Complete */ = {
+			isa = PBXGroup;
+			children = (
+				488ACDC12D2952160086AE8A /* Fonts */,
+				488ACDC32D2952160086AE8A /* License */,
+			);
+			path = ClashDisplay_Complete;
+			sourceTree = "<group>";
+		};
 		4893C59F2D2883FE002D8C10 = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +134,7 @@
 				4893C5BD2D288401002D8C10 /* WhatIAmToDoTests */,
 				4893C5C72D288401002D8C10 /* WhatIAmToDoUITests */,
 				4893C5A92D2883FE002D8C10 /* Products */,
+				488ACDC42D2952160086AE8A /* ClashDisplay_Complete */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,6 +168,7 @@
 			);
 			name = WhatIAmToDo;
 			packageProductDependencies = (
+				488ACDFB2D2A9B8C0086AE8A /* Lottie */,
 			);
 			productName = WhatIAmToDo;
 			productReference = 4893C5A82D2883FE002D8C10 /* WhatIAmToDo.app */;
@@ -195,6 +252,9 @@
 			);
 			mainGroup = 4893C59F2D2883FE002D8C10;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				488ACDFA2D2A9B8C0086AE8A /* XCRemoteSwiftPackageReference "lottie-spm" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4893C5A92D2883FE002D8C10 /* Products */;
 			projectDirPath = "";
@@ -212,6 +272,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				488ACDC52D2952160086AE8A /* FFL.txt in Resources */,
+				488ACDC62D2952160086AE8A /* ClashDisplay-Variable.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,7 +383,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				"INFOPLIST_KEY_UILaunchStoryboardName[sdk=*]" = LaunchScreen.storyboard;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -378,7 +443,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -399,11 +465,10 @@
 				DEVELOPMENT_TEAM = 7Q94L4HLT8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WhatIAmToDo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -428,11 +493,10 @@
 				DEVELOPMENT_TEAM = 7Q94L4HLT8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WhatIAmToDo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -558,6 +622,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		488ACDFA2D2A9B8C0086AE8A /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		488ACDFB2D2A9B8C0086AE8A /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 488ACDFA2D2A9B8C0086AE8A /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4893C5A02D2883FE002D8C10 /* Project object */;
 }
