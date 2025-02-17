@@ -34,7 +34,6 @@ struct MainTabBar: View {
                 }
                 .tag(2)
         }
-        .accentColor(.accentColor)
         .background(Color(UIColor.systemBackground).ignoresSafeArea())
         .ignoresSafeArea()
     }

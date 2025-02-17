@@ -10,16 +10,21 @@ import SwiftUI
 @main
 struct WhatIAmToDoApp: App {
     @StateObject var launchScreenState = LaunchScreenStateManager()
+    @StateObject var usersDefaultService = UserDefaultsService()
     
     var body: some Scene {
         WindowGroup {
             ZStack {
-                MainTabBar()
-                if launchScreenState.state != .finished {
-                    LaunchScreenView()
-                }
+                AuthorizationScreen()
+                    .environment(\.locale, Locale(identifier: usersDefaultService.getCurrentLocale()))
+//                MainTabBar()
+//                if launchScreenState.state != .finished {
+//                    LaunchScreenView()
+//                }
             }
             .environmentObject(launchScreenState)
+            .environmentObject(usersDefaultService)
+            
         }
     }
 }
