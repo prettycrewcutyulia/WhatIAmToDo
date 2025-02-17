@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct AuthorizationScreen: View {
-    @EnvironmentObject private var userDefaults: UserDefaultsService
     @StateObject private var viewModel = AuthorizationViewModel()
     @State private var email: String = ""
     @State private var password: String = ""
@@ -52,9 +51,6 @@ struct AuthorizationScreen: View {
                 }
                 .offset(y: 40)
             }
-        }
-        .onAppear {
-            viewModel.setup(userDefaults: userDefaults)
         }
     }
     

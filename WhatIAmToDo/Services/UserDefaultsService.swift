@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 class UserDefaultsService: ObservableObject {
+    static let shared = UserDefaultsService()
+
     private let defaults = UserDefaults.standard
     
     @AppStorage("selectedLanguage") private var selectedLanguage: String = "en"
@@ -16,6 +18,8 @@ class UserDefaultsService: ObservableObject {
     // Ключи для UserDefaults
     private let isRegisteredKey = "isRegisteredKey"
     private let localeKey = "localeKey"
+    
+    private init() {}
     
     // Проверка, зарегистрирован ли пользователь
     func isUserRegistered() -> Bool {

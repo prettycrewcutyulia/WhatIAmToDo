@@ -12,13 +12,7 @@ class AuthorizationViewModel: ObservableObject {
     @Published var isAuthorized: Bool = false
     
     // Зависимость от UserDefaultsService
-   private var userDefaults: UserDefaultsService?
-
-    // Инициализатор, принимающий UserDefaultsService
-    func setup(userDefaults: UserDefaultsService) {
-        self.userDefaults = userDefaults
-        self.isAuthorized = userDefaults.isUserRegistered()
-    }
+    private var userDefaults: UserDefaultsService = UserDefaultsService.shared
     
     func toggleAuthorization() {
         isAuthorized.toggle()
@@ -39,7 +33,7 @@ class AuthorizationViewModel: ObservableObject {
     
     func changeLanguage() {
         Task {
-            await userDefaults?.setAnotherLocale()
+            await userDefaults.setAnotherLocale()
         }
         
         print("setAnotherLocale")

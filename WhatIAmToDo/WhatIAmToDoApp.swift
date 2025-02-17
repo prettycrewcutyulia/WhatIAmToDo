@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct WhatIAmToDoApp: App {
     @StateObject var launchScreenState = LaunchScreenStateManager()
-    @StateObject var usersDefaultService = UserDefaultsService()
+    @StateObject var usersDefaultService = UserDefaultsService.shared
     
     var body: some Scene {
         WindowGroup {
