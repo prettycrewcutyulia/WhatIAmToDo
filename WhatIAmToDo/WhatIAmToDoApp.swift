@@ -15,13 +15,16 @@ struct WhatIAmToDoApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack {
-                AuthorizationScreen()
-                    .environment(\.locale, Locale(identifier: usersDefaultService.getCurrentLocale()))
-//                MainTabBar()
+//                if usersDefaultService.isUserRegistered() {
+                    MainTabBar()
+//                } else {
+//                    AuthorizationScreen()
+//                }
 //                if launchScreenState.state != .finished {
 //                    LaunchScreenView()
 //                }
             }
+            .environment(\.locale, Locale(identifier: usersDefaultService.getCurrentLocale()))
             .environmentObject(launchScreenState)
             .environmentObject(usersDefaultService)
             

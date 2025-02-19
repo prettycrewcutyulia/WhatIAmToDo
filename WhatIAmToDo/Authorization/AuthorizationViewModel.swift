@@ -16,26 +16,26 @@ class AuthorizationViewModel: ObservableObject {
     
     func toggleAuthorization() {
         isAuthorized.toggle()
-        print("isAuthorized: \(isAuthorized)")
     }
     
-    func login() {
+    func login(model: AuthRequest) -> String? {
         print("login")
+        return "errorrrr"
     }
     
-    func signup() {
+    func signup(model: RegistrationRequest) -> String?  {
         print( "signup")
+        return "errorrrr"
     }
     
-    func forgotPassword() {
+    func forgotPassword(email: String) -> String? {
         print( "forgotPassword")
+        return "errorrrr"
     }
     
     func changeLanguage() {
         Task {
             await userDefaults.setAnotherLocale()
         }
-        
-        print("setAnotherLocale")
     }
 }

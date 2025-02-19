@@ -9,6 +9,7 @@ import SwiftUI
 import Lottie
 
 struct AccountView: View {
+    @ObservedObject private var viewModel = AccountViewModel()
     var body: some View {
         VStack(alignment: .leading, spacing: 26) {
             Text("Profile and Settings")
@@ -18,7 +19,7 @@ struct AccountView: View {
                 .foregroundStyle(Color.accentColor)
             ProfileView()
                 .frame(height: 142)
-            SettingsView()
+            SettingsView(viewModel: viewModel)
             Spacer()
 //            LottieView(animation: <#LottieAnimation?#>)
         }
@@ -80,12 +81,64 @@ struct ProfileView: View {
     }
 }
 
-struct SettingView: View {
-    var title: String
+struct SettingsView: View {
+    @ObservedObject private var viewModel: AccountViewModel
+    
+    init(viewModel: AccountViewModel) {
+        self.viewModel = viewModel
+    }
 
     var body: some View {
+        VStack(spacing: 17) {
+            notificationMenuView
+            
+            languageMenuView
+        }
+        .foregroundStyle(Color.accentColor)
+    }
+    
+    var languageMenuView: some View {
+        Menu {
+            Button(action: {
+                viewModel.changeLanguage("en")
+            }) {
+                HStack {
+                    Text("English")
+                    if viewModel.selectedLanguage == "en" {
+                        Image(systemName: "checkmark")
+                    }
+                }
+            }
+            
+            Button(action: {
+                viewModel.changeLanguage("ru")
+            }) {
+                HStack {
+                    Text("Russian")
+                    if viewModel.selectedLanguage == "ru" {
+                        Image(systemName: "checkmark")
+                    }
+                }
+            }
+        } label: {
+            HStack {
+                Text("Language")
+                    .font(.targetFont(size: 16))
+                    .fontWeight(.heavy)
+                    .fontDesign(.rounded)
+                Spacer()
+
+                Image(systemName: "chevron.right")
+            }
+            .padding(15)
+            .background(Color.white)
+            .cornerRadius(12)
+        }
+    }
+    
+    var notificationMenuView: some View {
         HStack {
-            Text(title)
+            Text("Notification")
                 .font(.targetFont(size: 16))
                 .fontWeight(.heavy)
                 .fontDesign(.rounded)
@@ -96,17 +149,6 @@ struct SettingView: View {
         .padding(15)
         .background(Color.white)
         .cornerRadius(12)
-    }
-}
-
-struct SettingsView: View {
-    var body: some View {
-        VStack(spacing: 17) {
-            SettingView(title: "Notification")
-            SettingView(title: "Sync calendar")
-            SettingView(title: "Language")
-        }
-        .foregroundStyle(Color.accentColor)
     }
 }
 

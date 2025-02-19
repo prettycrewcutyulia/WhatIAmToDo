@@ -32,7 +32,7 @@ class UserDefaultsService: ObservableObject {
     }
     
     // Получение текущей локали
-    @MainActor func getCurrentLocale() -> String {
+    func getCurrentLocale() -> String {
         let locale = defaults.string(forKey: localeKey)
         if locale == nil {
             defaults.set("en", forKey: localeKey)
@@ -49,6 +49,22 @@ class UserDefaultsService: ObservableObject {
         } else {
             defaults.set("en", forKey: localeKey)
             selectedLanguage = "en"
+        }
+        defaults.synchronize()
+    }
+    
+    @MainActor func setAnotherLocale(locale: String) {
+        if selectedLanguage == locale {
+            return
+        }
+        if locale == "en" {
+            defaults.set("en", forKey: localeKey)
+            selectedLanguage = "en"
+        } else if locale == "ru" {
+            defaults.set("ru", forKey: localeKey)
+            selectedLanguage = "ru"
+        } else {
+            return
         }
         defaults.synchronize()
     }
