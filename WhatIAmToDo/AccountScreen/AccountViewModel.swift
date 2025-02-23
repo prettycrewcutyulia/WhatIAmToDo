@@ -8,12 +8,19 @@ import Combine
 import Foundation
 
 class AccountViewModel: ObservableObject {
-    @Published var selectedLanguage: String = UserDefaultsService.shared.getCurrentLocale()
+
+    @Published var selectedLanguage: String = "ru"
+    private var userDefaults: any UserDefaultsService
+    
+    init(userDefaults: any UserDefaultsService) {
+        self.selectedLanguage = userDefaults.getCurrentLocale()
+        self.userDefaults = userDefaults
+    }
     
     func changeLanguage(_ language: String) {
         Task {
-            await UserDefaultsService.shared.setAnotherLocale(locale: language)
-            let newLanguage = UserDefaultsService.shared.getCurrentLocale()
+            await userDefaults.setAnotherLocale(locale: language)
+            let newLanguage = userDefaults.getCurrentLocale()
             
             DispatchQueue.main.async {
                 self.selectedLanguage = newLanguage

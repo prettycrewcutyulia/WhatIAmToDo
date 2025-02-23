@@ -9,7 +9,7 @@ import SwiftUI
 import Lottie
 
 struct AccountView: View {
-    @ObservedObject private var viewModel = AccountViewModel()
+    @ObservedObject private var viewModel = AccountViewModel(userDefaults: DIContainer.shared.resolve())
     var body: some View {
         VStack(alignment: .leading, spacing: 26) {
             Text("Profile and Settings")

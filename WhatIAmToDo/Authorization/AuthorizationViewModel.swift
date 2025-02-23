@@ -11,8 +11,11 @@ import Combine
 class AuthorizationViewModel: ObservableObject {
     @Published var isAuthorized: Bool = false
     
-    // Зависимость от UserDefaultsService
-    private var userDefaults: UserDefaultsService = UserDefaultsService.shared
+    private var userDefaults: any UserDefaultsService
+    
+    init(userDefaults: any UserDefaultsService) {
+        self.userDefaults = userDefaults
+    }
     
     func toggleAuthorization() {
         isAuthorized.toggle()

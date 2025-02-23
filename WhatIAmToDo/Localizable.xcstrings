@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "AI" : {
+
+    },
     "Become the best version of yourself, start tracking your goals" : {
       "localizations" : {
         "ru" : {
@@ -264,15 +267,8 @@
         }
       }
     },
-    "Title" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Название"
-          }
-        }
-      }
+    "Tasks" : {
+
     },
     "User name" : {
       "localizations" : {

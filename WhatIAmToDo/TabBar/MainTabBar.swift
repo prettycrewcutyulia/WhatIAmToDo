@@ -21,6 +21,9 @@ struct MainTabBar: View {
                 }
                 .tag(0)
             AllTasksView()
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                .background(Color.background)
+                .padding(.bottom, 10)
                 .tabItem {
                     Image(systemName: "bookmark")
                 }

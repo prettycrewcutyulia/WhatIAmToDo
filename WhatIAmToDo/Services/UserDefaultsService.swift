@@ -8,8 +8,7 @@
 import Foundation
 import SwiftUI
 
-class UserDefaultsService: ObservableObject {
-    static let shared = UserDefaultsService()
+class UserDefaultsServiceImpl: UserDefaultsService {
 
     private let defaults = UserDefaults.standard
     
@@ -18,8 +17,6 @@ class UserDefaultsService: ObservableObject {
     // Ключи для UserDefaults
     private let isRegisteredKey = "isRegisteredKey"
     private let localeKey = "localeKey"
-    
-    private init() {}
     
     // Проверка, зарегистрирован ли пользователь
     func isUserRegistered() -> Bool {
@@ -33,24 +30,25 @@ class UserDefaultsService: ObservableObject {
     
     // Получение текущей локали
     func getCurrentLocale() -> String {
-        let locale = defaults.string(forKey: localeKey)
-        if locale == nil {
-            defaults.set("en", forKey: localeKey)
-        }
-        
-        return locale ?? "en"
+//        let locale = defaults.string(forKey: localeKey)
+//        if locale == nil {
+//            defaults.set("en", forKey: localeKey)
+//        }
+//        
+//        return locale ?? "en"
+        return selectedLanguage
     }
     
     // Установка локали
     @MainActor func setAnotherLocale() {
-        if defaults.string(forKey: localeKey) == "en" {
-            defaults.set("ru", forKey: localeKey)
+        if selectedLanguage == "en" {
+//            defaults.set("ru", forKey: localeKey)
             selectedLanguage = "ru"
         } else {
-            defaults.set("en", forKey: localeKey)
+//            defaults.set("en", forKey: localeKey)
             selectedLanguage = "en"
         }
-        defaults.synchronize()
+//        defaults.synchronize()
     }
     
     @MainActor func setAnotherLocale(locale: String) {
@@ -58,14 +56,32 @@ class UserDefaultsService: ObservableObject {
             return
         }
         if locale == "en" {
-            defaults.set("en", forKey: localeKey)
+//            defaults.set("en", forKey: localeKey)
             selectedLanguage = "en"
         } else if locale == "ru" {
-            defaults.set("ru", forKey: localeKey)
+//            defaults.set("ru", forKey: localeKey)
             selectedLanguage = "ru"
         } else {
             return
         }
-        defaults.synchronize()
+//        defaults.synchronize()
     }
+}
+
+
+protocol UserDefaultsService: ObservableObject {
+    // Метод для проверки, зарегистрирован ли пользователь
+    func isUserRegistered() -> Bool
+
+    // Метод для установки значения регистрации пользователя
+    func setUserRegistered(_ isRegistered: Bool) async
+
+    // Метод для получения текущей локали
+    func getCurrentLocale() -> String
+
+    // Метод для установки другой локали по предопределенному правилу
+    func setAnotherLocale() async
+
+    // Метод для установки конкретной локали на основе переданного значения
+    func setAnotherLocale(locale: String) async
 }

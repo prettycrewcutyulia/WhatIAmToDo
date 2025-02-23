@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct AuthorizationScreen: View {
-    @StateObject private var viewModel = AuthorizationViewModel()
+    @ObservedObject private var viewModel: AuthorizationViewModel
+    
+    init() {
+        self.viewModel = AuthorizationViewModel(userDefaults: DIContainer.shared.resolve())
+    }
 
     var body: some View {
         ZStack(alignment: .top) {
