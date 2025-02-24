@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
     "AI" : {
 
     },
@@ -64,6 +67,12 @@
           }
         }
       }
+    },
+    "Filter Name" : {
+
+    },
+    "Filters" : {
+
     },
     "Find your task" : {
       "localizations" : {
@@ -235,6 +244,9 @@
           }
         }
       }
+    },
+    "Save" : {
+
     },
     "Sign up" : {
       "extractionState" : "manual",
