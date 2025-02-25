@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Category: Identifiable {
-    var id = UUID()
+    var id: String
     var name: String
     var color: Color
 }

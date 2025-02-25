@@ -7,16 +7,16 @@
 import SwiftUI
 
 struct FiltersBottomSheetView: View {
+    
+    @Binding var selectedCategory: String?
+    @Binding var selectedColor: Color
+    @Binding var filters: [Category]
+    @Binding var isPresented: Bool
+
     @State private var isEditing: Bool = false
     @State private var editingFilterIndex: Int? = nil
     @State private var filterName: String = ""
     @State private var filterColor: Color = Constants.defaultColor
-    
-    @State private var filters: [Category] = [
-        Category(name: "Work", color: .green),
-        Category(name: "Personal", color: .blue),
-        Category(name: "Work", color: .red)
-    ]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 17) {
@@ -47,12 +47,13 @@ struct FiltersBottomSheetView: View {
                         withAnimation {
                             isEditing.toggle()
                             if let index = editingFilterIndex {
-                                filters[index] = Category(name: filterName, color: filterColor)
+                                var filterId = filters[index].id
+                                filters[index] = Category(id: filterId, name: filterName, color: filterColor)
                                 filterName = ""
                                 editingFilterIndex = nil
                                 filterColor = Constants.defaultColor
                             } else {
-                                filters.append(Category(name: filterName, color: filterColor))
+                                filters.append(Category(id: UUID().uuidString,name: filterName, color: filterColor))
                             }
                         }
                     }
@@ -99,8 +100,25 @@ struct FiltersBottomSheetView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .frame(height: 49)
                     .background(.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(
+                                filter.id == selectedCategory ? Color.accentColor : Color.clear,
+                                lineWidth: filter.id == selectedCategory ? 2 : 0
+                            )
+                    )
                     .cornerRadius(12)
                     .disabled(index == editingFilterIndex)
+                    .onTapGesture {
+                        if selectedCategory == filter.id {
+                            selectedCategory = nil
+                            selectedColor = .background
+                        } else {
+                            selectedCategory = filter.id
+                            selectedColor = filter.color
+                            isPresented.toggle()
+                        }
+                    }
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)

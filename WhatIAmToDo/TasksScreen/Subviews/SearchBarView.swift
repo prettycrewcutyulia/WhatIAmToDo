@@ -8,6 +8,9 @@ import SwiftUI
 
 struct SearchBarView: View {
     @Binding var text: String
+    @Binding var selectedCategory: String?
+    @Binding var selectedCategoryColor: Color
+    @Binding var filters: [Category]
     @State private var isEditing = false
     @State private var isBottomSheetPresented = false
     
@@ -21,7 +24,7 @@ struct SearchBarView: View {
                     Image("Filters")
                         .resizable()
                         .frame(width: 25, height: 25)
-                        .foregroundStyle(Color.black)
+                        .foregroundStyle(selectedCategoryColor)
                 }
                 .frame(width: 55, height: 55)
                 .background(Color.accentColor)
@@ -29,8 +32,12 @@ struct SearchBarView: View {
             }
             .padding(.trailing, 16)
             .sheet(isPresented: $isBottomSheetPresented) {
-                // Ваш контент для Bottom Sheet
-                FiltersBottomSheetView()
+                FiltersBottomSheetView(
+                    selectedCategory: $selectedCategory,
+                    selectedColor: $selectedCategoryColor,
+                    filters: $filters,
+                    isPresented: $isBottomSheetPresented
+                )
                     .cornerRadius(55)
                     .background(Color.background)
                     .ignoresSafeArea()
@@ -64,7 +71,7 @@ struct SearchBarView: View {
                     Image(systemName: "magnifyingglass")
                         .resizable()
                         .frame(width: 25, height: 25)
-                        .foregroundStyle(Color.background)
+                        .foregroundStyle(selectedCategoryColor)
                 }
                 .frame(width: 55, height: 55)
                 .background(Color.accentColor)
