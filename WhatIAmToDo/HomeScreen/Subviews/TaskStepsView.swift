@@ -20,7 +20,7 @@ struct TaskStepsView: View {
                 .fontWidth(.expanded)
                 .foregroundStyle(.accent)
             ForEach(checkListData) { item in
-                Step(
+                StepView(
                     isChecked: item.isChecked,
                     title: item.title
                 )
@@ -54,7 +54,7 @@ struct TaskStep: Identifiable {
      var title: String
  }
 
-struct Step: View {
+struct StepView: View {
     @State var isChecked: Bool = false
     var title: String
     func toggle() { isChecked = !isChecked }

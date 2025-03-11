@@ -26,4 +26,8 @@ class AllTaskViewModel: ObservableObject {
     }
     
     private var tasks: [Goal] = []
+    
+    init(taskService: TaskService) {
+        tasks = taskService.tasks
+    }
 }

@@ -47,7 +47,7 @@ struct FiltersBottomSheetView: View {
                         withAnimation {
                             isEditing.toggle()
                             if let index = editingFilterIndex {
-                                var filterId = filters[index].id
+                                let filterId = filters[index].id
                                 filters[index] = Category(id: filterId, name: filterName, color: filterColor)
                                 filterName = ""
                                 editingFilterIndex = nil

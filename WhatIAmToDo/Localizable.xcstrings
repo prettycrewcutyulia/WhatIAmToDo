@@ -4,6 +4,12 @@
     "" : {
 
     },
+    "Add some steps" : {
+
+    },
+    "Add your own task" : {
+
+    },
     "AI" : {
 
     },
@@ -47,6 +53,9 @@
           }
         }
       }
+    },
+    "Deadline" : {
+
     },
     "Email" : {
       "localizations" : {
@@ -94,6 +103,9 @@
         }
       }
     },
+    "Generate another plan" : {
+
+    },
     "Language" : {
       "localizations" : {
         "ru" : {
@@ -123,6 +135,9 @@
           }
         }
       }
+    },
+    "New step" : {
+
     },
     "Notification" : {
       "localizations" : {
@@ -248,6 +263,12 @@
     "Save" : {
 
     },
+    "Set Deadline" : {
+
+    },
+    "Set Start Date" : {
+
+    },
     "Sign up" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -279,6 +300,12 @@
         }
       }
     },
+    "Start Date" : {
+
+    },
+    "Step Title" : {
+
+    },
     "Tasks" : {
 
     },
@@ -291,6 +318,18 @@
           }
         }
       }
+    },
+    "Write a title" : {
+
+    },
+    "Write your message" : {
+
+    },
+    "Your AI assistant" : {
+
+    },
+    "Your AI assistant is typing" : {
+
     },
     "Выберите дни" : {
 

@@ -9,13 +9,11 @@ import SwiftUI
 struct AddButton: View {
     @State private var isPlusTapped = false
     @State private var showExtraButtons = false
-
+    
     var body: some View {
-        VStack(spacing: 14) {
-            if showExtraButtons {
-                    Button(action: {
-                        print("Extra button 1 tapped")
-                    }) {
+            VStack(spacing: 14) {
+                if showExtraButtons {
+                    NavigationLink(destination: ChatView()) {
                         Text("AI")
                             .font(.targetFont(size: 20))
                             .fontWeight(.bold)
@@ -27,9 +25,7 @@ struct AddButton: View {
                             .cornerRadius(12)
                     }
                     
-                    Button(action: {
-                        print("Extra button 2 tapped")
-                    }) {
+                    NavigationLink(destination: AddTaskView()) {
                         Image(systemName: "plus")
                             .resizable()
                             .frame(width: 25, height: 25)
@@ -38,22 +34,23 @@ struct AddButton: View {
                             .background(Color.white)
                             .cornerRadius(12)
                     }
-            }
-            
-            Button(action: {
-                isPlusTapped.toggle()
-                showExtraButtons.toggle()
-            }) {
-                HStack {
-                    Image(systemName: isPlusTapped ? "xmark" : "plus")
-                        .resizable()
-                        .frame(width: 25, height: 25)
-                        .foregroundStyle(.accent)
                 }
-                .frame(width: 55, height: 55)
-                .background(Color.white)
-                .cornerRadius(12)
+                
+                Button(action: {
+                    isPlusTapped.toggle()
+                    showExtraButtons.toggle()
+                }) {
+                    HStack {
+                        Image(systemName: isPlusTapped ? "xmark" : "plus")
+                            .resizable()
+                            .frame(width: 25, height: 25)
+                            .foregroundStyle(.accent)
+                    }
+                    .frame(width: 55, height: 55)
+                    .background(Color.white)
+                    .cornerRadius(12)
+                }
             }
-        }
+//        }
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AllTasksView: View {
     
-    @ObservedObject var viewModel = AllTaskViewModel()
+    @ObservedObject var viewModel = AllTaskViewModel(taskService: DIContainer.shared.resolve())
 
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
