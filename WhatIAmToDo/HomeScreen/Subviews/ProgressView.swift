@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct ProgressView: View {
-    @State var progress: String = "⎯"
+    @State var progress: String
     @State var title: String
+    
+    init(progress: String?, title: String) {
+        self.progress = progress ?? "⎯"
+        self.title = title
+    }
 
     var body: some View {
         ZStack {

@@ -8,27 +8,22 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State private var date = Date()
-    @State private var selectedDates: Set<DateComponents> = [DateComponents(year: 2025, month: 1, day: 17), DateComponents(year: 2025, month: 1, day: 18), DateComponents(year: 2025, month: 1, day: 19)]
-    
-    let checkListData = [
-        TaskStep(id: "0", title: "Neopolitan"),
-        TaskStep(id: "1",title: "New York"),
-        TaskStep(id: "2",title:"Hawaiian"),
-        TaskStep(id: "3",title:"Chicago Deep Dish"),
-        TaskStep(id: "4",title:"Californian")
-     ]
+    @StateObject private var viewModel = HomeViewModel(taskService: DIContainer.shared.resolve()) // Initialize the view model
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Constants.spacing) {
                 title
-                ChooseTaskBar()
-                CalendarView(selectedDates: $selectedDates)
+                ChooseTaskBar(goal: $viewModel.goal, allGoals: $viewModel.tasks) // Bind goal to viewModel
+                CalendarView(selectedDates: $viewModel.selectedDates) // Bind selectedDates to viewModel
                 
                 progressStack
                 
-                TaskStepsView(checkListData: checkListData)
+                if let goal = viewModel.goal,
+                   goal.steps.count > 0
+                {
+                    TaskStepsView(checkListData: goal.steps)
+                }
             }
             .padding(Constants.paddingInsets)
         }
@@ -44,9 +39,20 @@ struct HomeView: View {
     
     private var progressStack: some View {
         HStack {
-            ProgressView(progress: "3/8", title: "Progress")
+            if let completedSteps = viewModel.goal?.completedSteps,
+               let stepsCount = viewModel.goal?.steps.count,
+               stepsCount != 0
+            {
+                ProgressView(progress: "\(completedSteps)/\(stepsCount)", title: "Progress")
+            } else {
+                ProgressView(progress: nil, title: "Progress")
+            }
             Spacer()
-            ProgressView(progress: "5", title: "Days")
+            if let differenceInDays = viewModel.goal?.startDate?.distance(to: Date()) {
+                ProgressView(progress: "\(Int(differenceInDays / (60 * 60 * 24)) + 1)", title: "Days")
+            } else {
+                ProgressView(progress: nil, title: "Days")
+            }
         }
     }
 }

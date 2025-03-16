@@ -14,7 +14,7 @@ class TaskServiceImpl: TaskService {
     func fetchTasks(completion: @escaping (Result<[Goal], Error>) -> Void) {
         
         let tasks = [
-            Goal(name: "Buy groceries", category: [Category(id: UUID().uuidString, name: "Personal", color: .blue)], steps: []),
+            Goal(name: "Buy groceries", category: [Category(id: UUID().uuidString, name: "Personal", color: .blue)], steps: [], startDate: dateFromString("2025-03-14")),
             Goal(name: "Complete project", category: [Category(id: UUID().uuidString, name: "Work", color: .green)], steps: []),
             Goal(name: "Gym session", category: [Category(id: UUID().uuidString, name: "Personal", color: .blue)], steps: []),
             Goal(name: "Team meeting", category: [Category(id: UUID().uuidString, name: "Work", color: .red)], steps: [])
@@ -79,4 +79,11 @@ class TaskServiceImpl: TaskService {
             // completion(.failure(YourErrorType.someError))
         }
     }
+}
+
+// Реализация метода конвертации строки в дату
+func dateFromString(_ dateString: String) -> Date? {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+    return dateFormatter.date(from: dateString)
 }

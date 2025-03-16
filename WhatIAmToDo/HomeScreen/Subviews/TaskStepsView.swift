@@ -9,11 +9,11 @@ import SwiftUI
 
 struct TaskStepsView: View {
     
-    var checkListData: [TaskStep]
+    var checkListData: [Step]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 23) {
-            Text("Choose your task")
+            Text("Mark your steps")
                 .font(.targetFont(size: 16).width(.expanded))
                 .fontWeight(.heavy)
                 .fontDesign(.rounded)
@@ -21,7 +21,7 @@ struct TaskStepsView: View {
                 .foregroundStyle(.accent)
             ForEach(checkListData) { item in
                 StepView(
-                    isChecked: item.isChecked,
+                    isChecked: item.isCompleted,
                     title: item.title
                 )
             }
@@ -38,21 +38,13 @@ struct TaskStepsView: View {
 
 #Preview {
     TaskStepsView(checkListData: [
-        TaskStep(id: "0", title: "Neopolitan"),
-        TaskStep(id: "1",title: "New York"),
-        TaskStep(id: "2",title:"Hawaiian"),
-        TaskStep(id: "3",title:"Chicago Deep Dish"),
-        TaskStep(id: "4",title:"Californian")
+        Step(title: "Neopolitan"),
+        Step(title: "New York"),
+        Step(title:"Hawaiian"),
+        Step(title:"Chicago Deep Dish"),
+        Step(title:"Californian")
      ])
 }
-
-
-struct TaskStep: Identifiable {
-    var id: String
-    
-     var isChecked: Bool = false
-     var title: String
- }
 
 struct StepView: View {
     @State var isChecked: Bool = false

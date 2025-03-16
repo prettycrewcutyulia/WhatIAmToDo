@@ -14,13 +14,10 @@ struct WhatIAmToDoApp: App {
     @StateObject var usersDefaultService = UserDefaultsServiceImpl.shared
     
     init() {
-            setupDependencies()
-        }
+        setupDependencies()
+    }
 
     private mutating func setupDependencies() {
-        // Defer the resolution of dependencies until after initialization
-        
-        //_usersDefaultService = State(initialValue: DIContainer.shared.resolve())
         _launchScreenState = StateObject<LaunchScreenStateManager>(wrappedValue: DIContainer.shared.resolve())
     }
 
@@ -29,7 +26,6 @@ struct WhatIAmToDoApp: App {
             ZStack {
 //                if usersDefaultService.isUserRegistered() {
                     MainTabBar()
-                    //.environment(\.locale, Locale(identifier: usersDefaultService?.getCurrentLocale() ?? "ru"))
 //                } else {
 //                    AuthorizationScreen()
 //                }

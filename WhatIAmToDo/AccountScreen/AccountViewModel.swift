@@ -6,10 +6,15 @@
 //
 import Combine
 import Foundation
+import UIKit
 
 class AccountViewModel: ObservableObject {
 
     @Published var selectedLanguage: String = "ru"
+    @Published var isLoggedIn: Bool = false
+    @Published var selectedImage: UIImage?
+    var name: String = "Yulia G"
+    var mail: String = "ilovescat@gmail.com"
     private var userDefaults: any UserDefaultsService
     
     init(userDefaults: any UserDefaultsService) {
@@ -28,4 +33,10 @@ class AccountViewModel: ObservableObject {
         }
     }
     
+    func openTgBot() {
+        // TODO: Встроить норм ссылку
+        if let url = URL(string: "tg://resolve?domain=getmyid_bot&start=gmail") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
 }

@@ -24,6 +24,7 @@
       }
     },
     "Choose your task" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -138,6 +139,9 @@
           }
         }
       }
+    },
+    "Mark your steps" : {
+
     },
     "New step" : {
 
@@ -323,6 +327,9 @@
       }
     },
     "Write a title" : {
+
+    },
+    "Write your email" : {
 
     },
     "Write your message" : {
