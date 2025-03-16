@@ -20,7 +20,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     }
     
     private func setupDI() {
-        let userDefaultsRepository: any UserDefaultsService = UserDefaultsServiceImpl()
+        let userDefaultsRepository: any UserDefaultsService = UserDefaultsServiceImpl.shared
         DIContainer.shared.register(userDefaultsRepository)
         
         let serviceTask: any TaskService = TaskServiceImpl()

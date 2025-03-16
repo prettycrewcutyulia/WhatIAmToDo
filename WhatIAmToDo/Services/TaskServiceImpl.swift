@@ -14,10 +14,10 @@ class TaskServiceImpl: TaskService {
     func fetchTasks(completion: @escaping (Result<[Goal], Error>) -> Void) {
         
         let tasks = [
-            Goal(name: "Buy groceries", category: [Category(id: UUID().uuidString, name: "Personal", color: .blue)]),
-            Goal(name: "Complete project", category: [Category(id: UUID().uuidString, name: "Work", color: .green)]),
-            Goal(name: "Gym session", category: [Category(id: UUID().uuidString, name: "Personal", color: .blue)]),
-            Goal(name: "Team meeting", category: [Category(id: UUID().uuidString, name: "Work", color: .red)])
+            Goal(name: "Buy groceries", category: [Category(id: UUID().uuidString, name: "Personal", color: .blue)], steps: []),
+            Goal(name: "Complete project", category: [Category(id: UUID().uuidString, name: "Work", color: .green)], steps: []),
+            Goal(name: "Gym session", category: [Category(id: UUID().uuidString, name: "Personal", color: .blue)], steps: []),
+            Goal(name: "Team meeting", category: [Category(id: UUID().uuidString, name: "Work", color: .red)], steps: [])
         ]
         
         self.tasks = tasks

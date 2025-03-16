@@ -25,7 +25,7 @@ struct AddButton: View {
                             .cornerRadius(12)
                     }
                     
-                    NavigationLink(destination: AddTaskView()) {
+                    NavigationLink(destination: AddEditTaskView()) {
                         Image(systemName: "plus")
                             .resizable()
                             .frame(width: 25, height: 25)

@@ -7,6 +7,9 @@
 import SwiftUI
 
 protocol UserDefaultsService: ObservableObject {
+    
+   var selectedLanguage: String { get set }
+
     // Метод для проверки, зарегистрирован ли пользователь
     func isUserRegistered() -> Bool
 

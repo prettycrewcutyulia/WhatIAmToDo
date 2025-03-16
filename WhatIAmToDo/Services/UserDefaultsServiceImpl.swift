@@ -9,14 +9,19 @@ import Foundation
 import SwiftUI
 
 class UserDefaultsServiceImpl: UserDefaultsService {
-
-    private let defaults = UserDefaults.standard
     
-    @AppStorage("selectedLanguage") private var selectedLanguage: String = "en"
+    static let shared = UserDefaultsServiceImpl()
+    
+    @AppStorage("selectedLanguage") var selectedLanguage: String = "en"
     
     // Ключи для UserDefaults
     private let isRegisteredKey = "isRegisteredKey"
     private let localeKey = "localeKey"
+    private let defaults = UserDefaults.standard
+    
+    private init() {
+        selectedLanguage = UserDefaults.standard.string(forKey: localeKey) ?? "en"
+    }
     
     // Проверка, зарегистрирован ли пользователь
     func isUserRegistered() -> Bool {
@@ -30,16 +35,19 @@ class UserDefaultsServiceImpl: UserDefaultsService {
     
     // Получение текущей локали
     func getCurrentLocale() -> String {
-        return selectedLanguage
+        selectedLanguage
     }
     
     // Установка локали
     @MainActor func setAnotherLocale() {
         if selectedLanguage == "en" {
+            defaults.set("ru", forKey: localeKey)
             selectedLanguage = "ru"
         } else {
+            defaults.set("en", forKey: localeKey)
             selectedLanguage = "en"
         }
+        defaults.synchronize()
     }
     
     @MainActor func setAnotherLocale(locale: String) {
@@ -47,11 +55,14 @@ class UserDefaultsServiceImpl: UserDefaultsService {
             return
         }
         if locale == "en" {
+            defaults.set("en", forKey: localeKey)
             selectedLanguage = "en"
         } else if locale == "ru" {
+            defaults.set("ru", forKey: localeKey)
             selectedLanguage = "ru"
         } else {
             return
         }
+        defaults.synchronize()
     }
 }

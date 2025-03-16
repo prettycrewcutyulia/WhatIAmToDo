@@ -11,7 +11,7 @@ import SwiftUI
 struct WhatIAmToDoApp: App {
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     @StateObject var launchScreenState: LaunchScreenStateManager = LaunchScreenStateManager()
-    @State var usersDefaultService: (any UserDefaultsService)?
+    @StateObject var usersDefaultService = UserDefaultsServiceImpl.shared
     
     init() {
             setupDependencies()
@@ -19,7 +19,8 @@ struct WhatIAmToDoApp: App {
 
     private mutating func setupDependencies() {
         // Defer the resolution of dependencies until after initialization
-        _usersDefaultService = State(initialValue: DIContainer.shared.resolve())
+        
+        //_usersDefaultService = State(initialValue: DIContainer.shared.resolve())
         _launchScreenState = StateObject<LaunchScreenStateManager>(wrappedValue: DIContainer.shared.resolve())
     }
 
@@ -28,6 +29,7 @@ struct WhatIAmToDoApp: App {
             ZStack {
 //                if usersDefaultService.isUserRegistered() {
                     MainTabBar()
+                    //.environment(\.locale, Locale(identifier: usersDefaultService?.getCurrentLocale() ?? "ru"))
 //                } else {
 //                    AuthorizationScreen()
 //                }
@@ -35,7 +37,7 @@ struct WhatIAmToDoApp: App {
                     LaunchScreenView()
                 }
             }
-            .environment(\.locale, Locale(identifier: usersDefaultService?.getCurrentLocale() ?? "ru"))
+            .environment(\.locale, Locale(identifier: usersDefaultService.selectedLanguage))
             .environmentObject(launchScreenState)
             
         }

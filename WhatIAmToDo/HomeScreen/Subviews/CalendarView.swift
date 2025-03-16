@@ -10,9 +10,11 @@ import SwiftUI
 struct CalendarView: View {
     @Binding var selectedDates: Set<DateComponents>
     
+    @State private var userDefaults: any UserDefaultsService = DIContainer.shared.resolve()
+    
     var body: some View {
         MultiDatePicker("Выберите дни", selection: $selectedDates)
-            .environment(\.locale, Locale.init(identifier: "us"))
+            .environment(\.locale, Locale.init(identifier: userDefaults.getCurrentLocale()))
             .tint(Color.accentColor)
             .onTapGesture {}
             .disabled(selectedDates.isEmpty)

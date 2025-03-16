@@ -1,61 +1,42 @@
-//
-//  Step.swift
-//  WhatIAmToDo
-//
-//  Created by Юлия Гудошникова on 02.03.2025.
-//
-
 import SwiftUI
 
-struct Step: Identifiable {
-    let id = UUID()
-    var title: String
-    var isCompleted: Bool = false
-}
-
-struct AddTaskView: View {
-    @State private var taskTitle: String = ""
-    @State private var steps: [Step] = [
-        Step(title: "Buy some paints in special sh..."),
-        Step(title: "Find ou")
-    ]
-    @State private var newStepTitle: String = ""
-    @State private var showNewStepField: Bool = false
-    @State private var startDate: Date? = nil
-    @State private var deadline: Date? = nil
+struct AddEditTaskView: View {
+    @StateObject private var viewModel: TaskViewModel
+    
+    init(task: Goal? = nil) {
+        _viewModel = StateObject(wrappedValue: TaskViewModel(task: task, taskService: DIContainer.shared.resolve()))
+    }
     
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 20) {
-                Text("Add your own task")
-                    .font(.targetFont(size: 20.3))
+                Text(viewModel.isEditing ? "Edit your task" : "Add your own task")
+                    .font(.title)
                     .fontWeight(.heavy)
-                    .fontDesign(.rounded)
-                    .foregroundStyle(Color.accentColor)
                     .padding(.top, 20)
                 
-                TextField("Write a title", text: $taskTitle)
+                TextField("Write a title", text: $viewModel.taskTitle)
                     .padding()
                     .background(Color.white)
                     .cornerRadius(10)
                 
                 VStack(alignment: .leading) {
+                    // Управление датами
                     HStack {
-                        if let startDate = startDate {
-                            DatePicker("Start Date", selection: Binding($startDate, default: startDate), displayedComponents: .date)
+                        if let startDate = viewModel.startDate {
+                            DatePicker("Start Date", selection: Binding($viewModel.startDate, default: startDate), displayedComponents: .date)
                             
                             Button(action: {
-                                self.startDate = nil
+                                viewModel.removeStartDate()
                             }) {
                                 Image(systemName: "xmark.circle.fill")
                                     .resizable()
                                     .frame(width: 23, height: 23)
                                     .foregroundColor(.accentColor)
-
                             }
                         } else {
                             Button(action: {
-                                self.startDate = Date()
+                                viewModel.addStartDate()
                             }) {
                                 Text("Set Start Date")
                             }
@@ -63,18 +44,20 @@ struct AddTaskView: View {
                     }
 
                     HStack {
-                        if let deadline = deadline {
-                            DatePicker("Deadline", selection: Binding($deadline, default: deadline), displayedComponents: .date)
+                        if let deadline = viewModel.deadline {
+                            DatePicker("Deadline", selection: Binding($viewModel.deadline, default: deadline), displayedComponents: .date)
                             
                             Button(action: {
-                                self.deadline = nil
+                                viewModel.removeDeadline()
                             }) {
                                 Image(systemName: "xmark.circle.fill")
+                                    .resizable()
+                                    .frame(width: 23, height: 23)
                                     .foregroundColor(.accentColor)
                             }
                         } else {
                             Button(action: {
-                                self.deadline = Date()
+                                viewModel.addDeadline()
                             }) {
                                 Text("Set Deadline")
                             }
@@ -92,47 +75,42 @@ struct AddTaskView: View {
                         .bold()
                         .padding(.bottom, 5)
                     
-                    ForEach($steps) { $step in
+                    ForEach(viewModel.steps.indices, id: \.self) { index in
                         HStack {
                             Button(action: {
-                                step.isCompleted.toggle()
+                                viewModel.toggleStepCompletion(index: index)
                             }) {
-                                Image(systemName: step.isCompleted ? "checkmark.square" : "square")
+                                Image(systemName: viewModel.steps[index].isCompleted ? "checkmark.square" : "square")
                                     .resizable()
                                     .frame(width: 23, height: 23)
                                     .foregroundColor(.primary)
                             }
                             
-                            TextField("Step Title", text: $step.title)
-                                .strikethrough(step.isCompleted, color: .primary)
-                                .disabled(step.isCompleted)
+                            TextField("Step Title", text: $viewModel.steps[index].title)
+                                .strikethrough(viewModel.steps[index].isCompleted, color: .primary)
+                                .disabled(viewModel.steps[index].isCompleted)
                             
                             Spacer()
                         }
                         .padding(.vertical, 5)
                     }
-                    if showNewStepField {
+                    
+                    if viewModel.showNewStepField {
                         HStack {
-                            TextField("New step", text: $newStepTitle)
+                            TextField("New step", text: $viewModel.newStepTitle)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                             
                             Button(action: {
-                                if !newStepTitle.isEmpty {
-                                    steps.append(Step(title: newStepTitle))
-                                    newStepTitle = ""
-                                    showNewStepField = false
-                                }
+                                viewModel.addStep()
                             }) {
                                 Image(systemName: "checkmark.circle.fill")
                                     .resizable()
                                     .frame(width: 23, height: 23)
-                                
-
                             }
                         }
                     } else {
                         Button(action: {
-                            showNewStepField = true
+                            viewModel.showNewStepField = true
                         }) {
                             Image(systemName: "plus")
                                 .resizable()
@@ -141,8 +119,15 @@ struct AddTaskView: View {
                     }
                 }
                 .padding(32)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .background(Color.white)
                 .cornerRadius(10)
+                
+                filtersView
+                    .padding(32)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color.white)
+                    .cornerRadius(10)
                 
                 Spacer()
             }
@@ -150,6 +135,31 @@ struct AddTaskView: View {
             .background(Color.background)
             .foregroundStyle(Color.accentColor)
             .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+    
+    var filtersView: some View {
+        HStack {
+            Text("Filters")
+            ForEach(Array(viewModel.categories), id: \.self) { category in
+                category.color
+                    .frame(width: 23, height: 23)
+                    .cornerRadius(3)
+            }
+        }
+        .onTapGesture {
+            viewModel.isBottomSheetPresented.toggle()
+        }
+        .sheet(isPresented: $viewModel.isBottomSheetPresented) {
+            FiltersBottomSheetSelectedView(
+                selectedCategory: $viewModel.categories,
+                filters: viewModel.filters,
+                isPresented: $viewModel.isBottomSheetPresented
+            )
+            .cornerRadius(55)
+            .background(Color.background)
+            .ignoresSafeArea()
+            .presentationDetents([.medium, .large])
         }
     }
 }
@@ -167,6 +177,6 @@ extension Binding {
 
 struct AddTaskView_Previews: PreviewProvider {
     static var previews: some View {
-        AddTaskView()
+        AddEditTaskView()
     }
 }
