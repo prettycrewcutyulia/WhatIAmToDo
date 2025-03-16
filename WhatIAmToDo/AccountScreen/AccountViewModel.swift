@@ -35,7 +35,7 @@ class AccountViewModel: ObservableObject {
     
     func openTgBot() {
         // TODO: Встроить норм ссылку
-        if let url = URL(string: "tg://resolve?domain=getmyid_bot&start=gmail") {
+        if let url = URL(string: "tg://resolve?domain=/WhatIAmToDoBot&start=\(mail)") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
