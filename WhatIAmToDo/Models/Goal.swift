@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct Goal: Identifiable, Hashable {
-    var id = UUID()
-    var name: String
+struct Goal: Identifiable, Hashable, Decodable {
+    var id: String
+    var title: String
     var category: [Category]
     var steps: [Step]
     var startDate: Date?
@@ -20,8 +20,8 @@ struct Goal: Identifiable, Hashable {
     }
 }
 
-struct Step: Identifiable, Hashable {
-    let id = UUID()
+struct Step: Identifiable, Hashable, Decodable {
+    let id: String?
     var title: String
     var isCompleted: Bool = false
 }

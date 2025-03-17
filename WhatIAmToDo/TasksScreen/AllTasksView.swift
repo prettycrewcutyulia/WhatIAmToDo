@@ -41,6 +41,9 @@ struct AllTasksView: View {
         }
         .padding(25)
         .background(Color.background)
+        .onAppear {
+            viewModel.updateData()
+        }
     }
     
     private var title: some View {

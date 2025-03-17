@@ -27,6 +27,9 @@ struct HomeView: View {
             }
             .padding(Constants.paddingInsets)
         }
+        .onAppear {
+            viewModel.updateData()
+        }
     }
     
     private var title: some View {

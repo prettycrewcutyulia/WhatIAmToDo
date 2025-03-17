@@ -36,16 +36,6 @@ struct TaskStepsView: View {
     }
 }
 
-#Preview {
-    TaskStepsView(checkListData: [
-        Step(title: "Neopolitan"),
-        Step(title: "New York"),
-        Step(title:"Hawaiian"),
-        Step(title:"Chicago Deep Dish"),
-        Step(title:"Californian")
-     ])
-}
-
 struct StepView: View {
     @State var isChecked: Bool = false
     var title: String

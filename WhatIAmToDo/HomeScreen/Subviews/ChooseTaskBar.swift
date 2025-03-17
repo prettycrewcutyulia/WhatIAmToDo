@@ -19,7 +19,7 @@ struct ChooseTaskBar: View {
                     goal = eachGoal
                 }) {
                     HStack {
-                        Text(eachGoal.name)
+                        Text(eachGoal.title)
                         if goal == eachGoal {
                             Image(systemName: "checkmark")
                         }
@@ -28,10 +28,10 @@ struct ChooseTaskBar: View {
             }
         } label: {
             HStack {
-                Text(goal?.name ?? "Choose your task")
+                Text(goal?.title ?? "Choose your task")
                     .font(.system(size: 16))
-                    .fontWeight(goal?.name == nil ? .light : .bold)
-                    .foregroundColor(goal?.name == nil ? .gray : .accent)
+                    .fontWeight(goal?.title == nil ? .light : .bold)
+                    .foregroundColor(goal?.title == nil ? .gray : .accent)
                 Spacer()
                 Image(systemName: "chevron.down")
                     .fontWeight(.heavy)

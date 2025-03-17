@@ -31,7 +31,7 @@ struct FiltersBottomSheetSelectedView: View {
                             .cornerRadius(3)
                             .padding(.horizontal, 14)
                         
-                        Text(filter.name)
+                        Text(filter.title)
                             .font(.targetFont(size: 16))
                             .fontDesign(.rounded)
                         

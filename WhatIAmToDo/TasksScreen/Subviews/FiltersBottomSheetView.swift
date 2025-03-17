@@ -18,6 +18,8 @@ struct FiltersBottomSheetView: View {
     @State private var filterName: String = ""
     @State private var filterColor: Color = Constants.defaultColor
     
+    private let taskService: TaskService = DIContainer.shared.resolve()
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 17) {
             HStack {
@@ -48,12 +50,18 @@ struct FiltersBottomSheetView: View {
                             isEditing.toggle()
                             if let index = editingFilterIndex {
                                 let filterId = filters[index].id
-                                filters[index] = Category(id: filterId, name: filterName, color: filterColor)
+                                filters[index] = Category(id: filterId, title: filterName, colorHex: UIColor(filterColor).toHexString() ?? "")
+                                taskService.updateFilter(id: filterId, updateRequest: UpdateFilterRequest(title: filterName, color: UIColor(filterColor).toHexString() ?? ""), completion:  { _ in })
                                 filterName = ""
                                 editingFilterIndex = nil
                                 filterColor = Constants.defaultColor
                             } else {
-                                filters.append(Category(id: UUID().uuidString,name: filterName, color: filterColor))
+                                filters.append(Category(
+                                    id: UUID().uuidString,
+                                    title: filterName,
+                                    colorHex: UIColor(filterColor).toHexString() ?? ""
+                                ))
+                                taskService.createFilter(newFilter: UpdateFilterRequest(title: filterName, color: UIColor(filterColor).toHexString() ?? ""), completion: { _ in })
                             }
                         }
                     }
@@ -70,16 +78,16 @@ struct FiltersBottomSheetView: View {
                             .cornerRadius(3)
                             .padding(.horizontal, 14)
                         
-                        Text(filter.name)
+                        Text(filter.title)
                             .font(.targetFont(size: 16))
                             .fontDesign(.rounded)
                         Spacer()
                         
                         HStack {
                             Button(action: {
-                                print(filter.name)
+                                print(filter.title)
                                 editingFilterIndex = index
-                                filterName = filter.name
+                                filterName = filter.title
                                 filterColor = filter.color
                                 isEditing.toggle()
                             }) {
@@ -88,7 +96,7 @@ struct FiltersBottomSheetView: View {
                             .buttonStyle(BorderlessButtonStyle())
                             
                             Button(action: {
-                                print("delete \(filter.name)")
+                                print("delete \(filter.title)")
                                 deleteFilter(filter)
                             }) {
                                 Image(systemName: "trash")
@@ -132,6 +140,8 @@ struct FiltersBottomSheetView: View {
         if let index = filters.firstIndex(where: { $0.id == filter.id }) {
             filters.remove(at: index)
         }
+        
+        taskService.deleteFilter(id: filter.id, completion: { _ in })
     }
 }
 

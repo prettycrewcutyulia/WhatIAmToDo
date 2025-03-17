@@ -22,7 +22,7 @@ struct TaskItemView: View {
                     }
                 }
                 
-                Text(goal.name)
+                Text(goal.title)
                     .font(.targetFont(size: 16))
                     .fontWeight(.heavy)
                     .fontDesign(.rounded)

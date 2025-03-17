@@ -20,10 +20,13 @@ class TaskViewModel: ObservableObject {
     
     var filters: [Category]
     let isEditing: Bool
+    var goalId: String?
+    let taskService: TaskService
     
     init(task: Goal? = nil, taskService: TaskService) {
         if let task = task {
-            self.taskTitle = task.name
+            self.goalId = task.id
+            self.taskTitle = task.title
             self.steps = task.steps
             self.startDate = task.startDate
             self.deadline = task.deadline
@@ -39,6 +42,7 @@ class TaskViewModel: ObservableObject {
         }
         
         filters = taskService.filters
+        self.taskService = taskService
     }
     
     func toggleStepCompletion(index: Int) {
@@ -47,7 +51,7 @@ class TaskViewModel: ObservableObject {
     
     func addStep() {
         if !newStepTitle.isEmpty {
-            steps.append(Step(title: newStepTitle))
+            steps.append(Step(id: UUID().uuidString, title: newStepTitle))
             newStepTitle = ""
             showNewStepField = false
         }
@@ -67,5 +71,36 @@ class TaskViewModel: ObservableObject {
     
     func removeDeadline() {
         self.deadline = nil
+    }
+    
+    func saveGoal() {
+        taskService.createGoal(
+            goalRequest: GoalRequest(
+                userId: "1",
+                title: taskTitle,
+                categories: categories.map{ CategoryRequest(id: $0.id) },
+                steps: steps.map{ StepRequest(title: $0.title, isCompleted: $0.isCompleted) },
+                startDate: startDate,
+                deadline: deadline
+            ),
+            completion: {_ in }
+        )
+    }
+    
+    func updateGoal() {
+        if let goalId {
+            taskService.updateGoal(
+                id: goalId,
+                goalRequest: GoalRequest(
+                    userId: "1",
+                    title: taskTitle,
+                    categories: categories.map{ CategoryRequest(id: $0.id) },
+                    steps: steps.map{ StepRequest(title: $0.title, isCompleted: $0.isCompleted) },
+                    startDate: startDate,
+                    deadline: deadline
+                ),
+                completion: {_ in }
+            )
+        }
     }
 }

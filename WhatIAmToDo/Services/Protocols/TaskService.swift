@@ -17,10 +17,14 @@ protocol TaskService {
 
     // Метод для получения фильтров с бэкенда
     func fetchFilters(completion: @escaping (Result<[Category], Error>) -> Void)
-        
-    // Метод для отправки задач на бэкенд
-    func sendTasks(_ tasks: [Goal], completion: @escaping (Result<Void, Error>) -> Void)
-
-    // Метод для отправки фильтров на бэкенд
-    func sendFilters(_ filters: [Category], completion: @escaping (Result<Void, Error>) -> Void)
+    
+    func createGoal(goalRequest: GoalRequest, completion: @escaping (Result<String, Error>) -> Void)
+    
+    func createFilter(newFilter: UpdateFilterRequest, completion: @escaping (Result<String, Error>) -> Void)
+    func updateFilter(id: String, updateRequest: UpdateFilterRequest, completion: @escaping (Result<String, Error>) -> Void)
+    func deleteFilter(id: String, completion: @escaping (Result<String, Error>) -> Void)
+    
+    func getGoalUsingAI(request: AiGoalRequest, completion: @escaping (Result<GoalPlan, Error>) -> Void)
+    func updateGoal(id: String, goalRequest: GoalRequest, completion: @escaping (Result<String, Error>) -> Void)
+    
 }

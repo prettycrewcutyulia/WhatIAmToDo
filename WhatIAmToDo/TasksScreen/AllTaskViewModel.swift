@@ -12,22 +12,27 @@ class AllTaskViewModel: ObservableObject {
     @Published var selectedCategory: String?
     @Published var selectedCategoryColor: Color = .background
     
-    @Published var filters: [Category] = [
-        Category(id: UUID().uuidString, name: "Work", color: .green),
-                Category(id: UUID().uuidString, name: "Personal", color: .blue),
-                Category(id: UUID().uuidString, name: "Work", color: .red)
-            ]
+    @Published var filters: [Category]
 
     var filteredTasks: [Goal] {
         tasks.filter { task in
             (selectedCategory == nil || task.category.contains(where: {$0.id == selectedCategory})) &&
-            (queryString.isEmpty || task.name.lowercased().contains(queryString.lowercased()))
+            (queryString.isEmpty || task.title.lowercased().contains(queryString.lowercased()))
         }
     }
     
-    private var tasks: [Goal] = []
+    @Published var tasks: [Goal] = []
+    
+    private var taskService: TaskService
     
     init(taskService: TaskService) {
+        self.taskService = taskService
         tasks = taskService.tasks
+        filters = taskService.filters
+    }
+    
+    func updateData() {
+        tasks = taskService.tasks
+        filters = taskService.filters
     }
 }

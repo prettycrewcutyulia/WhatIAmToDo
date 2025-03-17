@@ -71,7 +71,7 @@ struct ChatView: View {
                         .cornerRadius(8)
 
                         Button("Save") {
-                            // Action for save
+                            viewModel.safeAnswer()
                         }
                         .padding()
                         .frame(maxWidth: .infinity)

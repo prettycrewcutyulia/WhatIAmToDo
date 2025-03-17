@@ -17,15 +17,10 @@ final class HomeViewModel: ObservableObject {
         }
     @Published var tasks: [Goal] = []
     
-    let checkListData = [
-        Step(title: "Neopolitan"),
-        Step(title: "New York"),
-        Step(title: "Hawaiian"),
-        Step(title: "Chicago Deep Dish"),
-        Step(title: "Californian")
-    ]
+    private let taskService: TaskService
 
     init(taskService: TaskService) {
+        self.taskService = taskService
         tasks = taskService.tasks
     }
     
@@ -45,5 +40,8 @@ final class HomeViewModel: ObservableObject {
             currentDate = nextDate
         }
     }
-    // Add any logic or helper methods here if needed
+
+    func updateData() {
+        tasks = taskService.tasks
+    }
 }
