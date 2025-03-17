@@ -366,6 +366,7 @@ class TaskServiceImpl: TaskService {
         
         // Сериализация объекта GoalRequest в JSON
         let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
         
         do {
             do {
