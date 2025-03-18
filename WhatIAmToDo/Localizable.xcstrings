@@ -48,12 +48,11 @@
       }
     },
     "Choose your task" : {
-      "comment" : "Prompt to choose a task",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Выберите свою цель"
+            "value" : "Выбери свою цель"
           }
         }
       }
@@ -238,9 +237,6 @@
           }
         }
       }
-    },
-    "Key" : {
-      "extractionState" : "manual"
     },
     "Language" : {
       "localizations" : {

@@ -18,18 +18,15 @@ struct ChatView: View {
     @StateObject private var viewModel = ChatViewModel()
 
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             HStack {
                 Spacer()
                 Image(systemName: "lasso.badge.sparkles")
                     .resizable()
-                    .frame(width: 48, height: 48)
+                    .frame(width: 30, height: 30)
                     .cornerRadius(12)
                 Text("Your AI assistant")
-                    .font(.targetFont(size: 20.3))
-                    .fontWeight(.heavy)
-                    .fontDesign(.rounded)
-                    .foregroundStyle(Color.accentColor)
+                    .title()
                 Spacer()
             }
             .padding()

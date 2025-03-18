@@ -12,9 +12,7 @@ struct AddEditTaskView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     Text(viewModel.isEditing ? "Edit your task" : "Add your own task")
-                        .font(.title)
-                        .fontWeight(.heavy)
-                        .padding(.top, 20)
+                        .title()
                     
                     TextField("Write a title", text: $viewModel.taskTitle)
                         .padding()

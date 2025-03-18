@@ -12,6 +12,7 @@ struct ReminderView: View {
     @State private var reminderOption: ReminderOption = .day
     @State private var customDays: Int = 1
     @State private var reminders: Set<String> = []
+    @Environment(\.locale) var locale
 
     var body: some View {
         NavigationView {

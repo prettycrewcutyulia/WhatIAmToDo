@@ -9,11 +9,9 @@ import SwiftUI
 
 struct ProgressView: View {
     @State var progress: String
-    @State var title: String
     
-    init(progress: String?, title: String) {
+    init(progress: String?) {
         self.progress = progress ?? "⎯"
-        self.title = title
     }
 
     var body: some View {
@@ -25,7 +23,7 @@ struct ProgressView: View {
             .fill(Color.white)
             
             VStack(spacing: 15) {
-                Text(title)
+                Text("Progress")
                     .font(.targetFont(size: 16))
                     .fontWeight(.heavy)
                     .fontDesign(.rounded)
@@ -38,3 +36,34 @@ struct ProgressView: View {
         .frame(width: 140, height: 120)
     }
 }
+
+struct ProgressViewDays: View {
+    @State var progress: String
+    
+    init(progress: String?) {
+        self.progress = progress ?? "⎯"
+    }
+
+    var body: some View {
+        ZStack {
+            RoundedRectangle(
+                cornerRadius: 12,
+                style: .continuous
+            )
+            .fill(Color.white)
+            
+            VStack(spacing: 15) {
+                Text("Days")
+                    .font(.targetFont(size: 16))
+                    .fontWeight(.heavy)
+                    .fontDesign(.rounded)
+                Text(progress)
+                    .font(.targetFont(size: 16))
+            }
+            .foregroundStyle(Color.accentColor)
+                
+        }
+        .frame(width: 140, height: 120)
+    }
+}
+

@@ -51,10 +51,7 @@ struct AllTasksView: View {
     
     private var title: some View {
         Text("Tasks")
-            .font(.targetFont(size: 20.3))
-            .fontWeight(.heavy)
-            .fontDesign(.rounded)
-            .foregroundStyle(Color.accentColor)
+            .title()
     }
 }
 

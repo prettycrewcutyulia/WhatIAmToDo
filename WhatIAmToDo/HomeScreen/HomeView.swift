@@ -34,10 +34,7 @@ struct HomeView: View {
     
     private var title: some View {
         Text("Report")
-            .font(.targetFont(size: 20.3))
-            .fontWeight(.heavy)
-            .fontDesign(.rounded)
-            .foregroundStyle(Color.accentColor)
+            .title()
     }
     
     private var progressStack: some View {
@@ -46,15 +43,15 @@ struct HomeView: View {
                let stepsCount = viewModel.goal?.steps.count,
                stepsCount != 0
             {
-                ProgressView(progress: "\(completedSteps)/\(stepsCount)", title:  NSLocalizedString("Progress", comment: "progress"))
+                ProgressView(progress: "\(completedSteps)/\(stepsCount)")
             } else {
-                ProgressView(progress: nil, title: NSLocalizedString("Progress", comment: "progress"))
+                ProgressView(progress: nil)
             }
             Spacer()
             if let differenceInDays = viewModel.goal?.startDate?.distance(to: Date()) {
-                ProgressView(progress: "\(Int(differenceInDays / (60 * 60 * 24)) + 1)", title: NSLocalizedString("Days", comment: "days"))
+                ProgressViewDays(progress: "\(Int(differenceInDays / (60 * 60 * 24)) + 1)")
             } else {
-                ProgressView(progress: nil, title:  NSLocalizedString("Days", comment: "days"))
+                ProgressView(progress: nil)
             }
         }
     }

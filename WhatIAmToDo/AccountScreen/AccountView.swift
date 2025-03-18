@@ -14,10 +14,7 @@ struct AccountView: View {
         NavigationView {
             VStack(alignment: .leading, spacing: 26) {
                 Text("Profile and Settings")
-                    .font(.targetFont(size: 20.3))
-                    .fontWeight(.heavy)
-                    .fontDesign(.rounded)
-                    .foregroundStyle(Color.accentColor)
+                    .title()
                 ProfileView(viewModel: viewModel)
                     .frame(height: 142)
                 SettingsView(viewModel: viewModel)
