@@ -24,4 +24,5 @@ struct Step: Identifiable, Hashable, Decodable {
     let id: String?
     var title: String
     var isCompleted: Bool = false
+    var deadline: Date?
 }

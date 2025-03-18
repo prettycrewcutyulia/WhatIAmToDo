@@ -471,6 +471,16 @@
         }
       }
     },
+    "Set Step Deadline" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Установить дедлайн шага"
+          }
+        }
+      }
+    },
     "Sign up" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -508,6 +518,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Дата начала"
+          }
+        }
+      }
+    },
+    "Step Deadline" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дедлайн шага"
           }
         }
       }
@@ -591,9 +611,6 @@
           }
         }
       }
-    },
-    "Выберите дни" : {
-
     }
   },
   "version" : "1.0"

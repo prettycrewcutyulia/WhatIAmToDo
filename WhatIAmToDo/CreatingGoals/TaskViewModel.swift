@@ -72,6 +72,14 @@ class TaskViewModel: ObservableObject {
     func removeDeadline() {
         self.deadline = nil
     }
+
+    func addStepDeadline(index: Int, deadline: Date) {
+        steps[index].deadline = deadline
+    }
+    
+    func removeStepDeadline(index: Int) {
+        steps[index].deadline = nil
+    }
     
     func saveGoal() {
         taskService.createGoal(

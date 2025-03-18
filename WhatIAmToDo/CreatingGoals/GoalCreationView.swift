@@ -75,24 +75,57 @@ struct AddEditTaskView: View {
                             .padding(.bottom, 5)
                         
                         ForEach(viewModel.steps.indices, id: \.self) { index in
-                            HStack {
-                                Button(action: {
-                                    viewModel.toggleStepCompletion(index: index)
-                                }) {
-                                    Image(systemName: viewModel.steps[index].isCompleted ? "checkmark.square" : "square")
-                                        .resizable()
-                                        .frame(width: 23, height: 23)
-                                        .foregroundColor(.primary)
+                            VStack(spacing: .zero) {
+                                HStack {
+                                    Button(action: {
+                                        viewModel.toggleStepCompletion(index: index)
+                                    }) {
+                                        Image(systemName: viewModel.steps[index].isCompleted ? "checkmark.square" : "square")
+                                            .resizable()
+                                            .frame(width: 23, height: 23)
+                                            .foregroundColor(.primary)
+                                    }
+                                    
+                                    TextField("Step Title", text: $viewModel.steps[index].title, axis: .vertical)
+                                        .strikethrough(viewModel.steps[index].isCompleted, color: .primary)
+                                        .disabled(viewModel.steps[index].isCompleted)
+                                        .lineLimit(nil)
+                                    
+                                    Spacer()
                                 }
                                 
-                                TextField("Step Title", text: $viewModel.steps[index].title, axis: .vertical)
-                                    .strikethrough(viewModel.steps[index].isCompleted, color: .primary)
-                                    .disabled(viewModel.steps[index].isCompleted)
-                                    .lineLimit(nil)
-                                
-                                Spacer()
+                                HStack {
+                                    Spacer()
+                                    if let stepDeadline = viewModel.steps[index].deadline {
+                                        DatePicker(
+                                            "Step Deadline",
+                                            selection: Binding(get: {
+                                                stepDeadline
+                                            }, set: { newDate in
+                                                viewModel.addStepDeadline(index: index, deadline: newDate)
+                                            }),
+                                            displayedComponents: .date
+                                        )
+                                        
+                                        Button(action: {
+                                            viewModel.removeStepDeadline(index: index)
+                                        }) {
+                                            Image(systemName: "xmark.circle.fill")
+                                                .resizable()
+                                                .frame(width: 23, height: 23)
+                                                .foregroundColor(.accentColor)
+                                        }
+                                    } else {
+                                        Button(action: {
+                                            viewModel.addStepDeadline(index: index, deadline: Date())
+                                        }) {
+                                            Text("Set Step Deadline")
+                                        }
+                                    }
+                                }
                             }
                             .padding(.vertical, 5)
+                            
                         }
                         
                         if viewModel.showNewStepField {

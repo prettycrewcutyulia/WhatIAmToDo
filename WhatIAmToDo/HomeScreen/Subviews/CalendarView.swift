@@ -13,13 +13,14 @@ struct CalendarView: View {
     @StateObject var usersDefaultService = UserDefaultsServiceImpl.shared
     
     var body: some View {
-        MultiDatePicker("Выберите дни", selection: $selectedDates)
+        MultiDatePicker("", selection: $selectedDates)
             .environment(\.locale, Locale.init(identifier: usersDefaultService.selectedLanguage))
             .tint(Color.accentColor)
             .onTapGesture {}
             .disabled(selectedDates.isEmpty)
             .padding()
             .background(Color.white.cornerRadius(Constants.radius))
+            .foregroundStyle(Color.accentColor)
     }
 }
 

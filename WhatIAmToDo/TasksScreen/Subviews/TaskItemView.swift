@@ -28,6 +28,13 @@ struct TaskItemView: View {
                     .fontDesign(.rounded)
                     .foregroundStyle(Color.accentColor)
                 Spacer()
+                
+                ForEach(goal.steps.count > 4 ? Array(goal.steps[0..<4]) : goal.steps) { step in
+                    Text(goal.title)
+                        .font(.targetFont(size: 16))
+                        .foregroundStyle(.hint)
+                        .lineLimit(1)
+                }
             }
             .padding(15)
             .frame(width: 147, height: 142)

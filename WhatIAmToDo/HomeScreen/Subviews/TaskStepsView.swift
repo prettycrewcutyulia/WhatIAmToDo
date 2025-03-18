@@ -22,7 +22,8 @@ struct TaskStepsView: View {
             ForEach(checkListData) { item in
                 StepView(
                     isChecked: item.isCompleted,
-                    title: item.title
+                    title: item.title,
+                    deadline: item.deadline
                 )
             }
             .font(.targetFont(size: 16))
@@ -39,17 +40,41 @@ struct TaskStepsView: View {
 struct StepView: View {
     @State var isChecked: Bool = false
     var title: String
+    var deadline: Date?
     func toggle() { isChecked = !isChecked }
     var body: some View {
-        HStack{
-            Button(action: toggle) {
-                Image(systemName: isChecked ? "checkmark.square.fill" : "square")
-                    .resizable()
-                    .frame(width: 23, height: 23)
+        VStack(alignment: .leading, spacing: 0) {
+            HStack{
+                Button(action: toggle) {
+                    Image(systemName: isChecked ? "checkmark.square.fill" : "square")
+                        .resizable()
+                        .frame(width: 23, height: 23)
+                }
+                Text(title)
+                    .font(.targetFont(size: 16))
+                    .lineLimit(nil)
             }
-            Text(title)
-                .font(.targetFont(size: 16))
-                .lineLimit(nil)
+            
+            if let deadline {
+                DatePicker(
+                    "Step Deadline:",
+                    selection: .constant(deadline),
+                    displayedComponents: .date
+                )
+                .disabled(true)
+            }
         }
+    }
+}
+
+
+// Предпросмотр
+struct TaskStepsView_Previews: PreviewProvider {
+    static var previews: some View {
+        TaskStepsView(checkListData: [
+            Step(id: nil, title: "Step 1", isCompleted: false, deadline: Date()),
+            Step(id: nil, title: "Step 2", isCompleted: true),
+            Step(id: nil, title: "Step 3", isCompleted: false)
+        ])
     }
 }
