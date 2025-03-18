@@ -4,11 +4,35 @@
     "" : {
 
     },
+    "Add Reminder" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Установить напоминание"
+          }
+        }
+      }
+    },
     "Add some steps" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавь шаги"
+          }
+        }
+      }
     },
     "Add your own task" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавь свою задачу"
+          }
+        }
+      }
     },
     "AI" : {
 
@@ -24,12 +48,12 @@
       }
     },
     "Choose your task" : {
-      "extractionState" : "stale",
+      "comment" : "Prompt to choose a task",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Выберите цель"
+            "value" : "Выберите свою цель"
           }
         }
       }
@@ -40,6 +64,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Подтвердите пароль"
+          }
+        }
+      }
+    },
+    "Connect Telegram" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подключить Telegram"
+          }
+        }
+      }
+    },
+    "Connect Telegram to receive reminders" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подключите Telegram для получения напоминаний"
+          }
+        }
+      }
+    },
+    "Custom Days" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Своё число"
           }
         }
       }
@@ -55,11 +109,35 @@
         }
       }
     },
+    "Days:" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дней:"
+          }
+        }
+      }
+    },
     "Deadline" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дедлайн"
+          }
+        }
+      }
     },
     "Edit your task" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Редактировать цель"
+          }
+        }
+      }
     },
     "Email" : {
       "localizations" : {
@@ -81,11 +159,35 @@
         }
       }
     },
+    "Enter number of days" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите количество дней"
+          }
+        }
+      }
+    },
     "Filter Name" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Название фильтра"
+          }
+        }
+      }
     },
     "Filters" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Фильтры"
+          }
+        }
+      }
     },
     "Find your task" : {
       "localizations" : {
@@ -108,7 +210,37 @@
       }
     },
     "Generate another plan" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сгенерировать другой план"
+          }
+        }
+      }
+    },
+    "In 1 Day" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "За 1 день"
+          }
+        }
+      }
+    },
+    "In 1 Week" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "За неделю"
+          }
+        }
+      }
+    },
+    "Key" : {
+      "extractionState" : "manual"
     },
     "Language" : {
       "localizations" : {
@@ -141,10 +273,24 @@
       }
     },
     "Mark your steps" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отметьте свои шаги"
+          }
+        }
+      }
     },
     "New step" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Новый шаг"
+          }
+        }
+      }
     },
     "Notification" : {
       "localizations" : {
@@ -227,6 +373,28 @@
         }
       }
     },
+    "Reminder in %d days" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Напоминание за %d дней"
+          }
+        }
+      }
+    },
+    "Reminder in 1 week" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Напоминание за неделю"
+          }
+        }
+      }
+    },
     "Report" : {
       "localizations" : {
         "ru" : {
@@ -268,13 +436,44 @@
       }
     },
     "Save" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранить"
+          }
+        }
+      }
     },
     "Set Deadline" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Установить дедлайн"
+          }
+        }
+      }
+    },
+    "Set Reminder" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Установить напоминание"
+          }
+        }
+      }
     },
     "Set Start Date" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Установить дату начала"
+          }
+        }
+      }
     },
     "Sign up" : {
       "extractionState" : "manual",
@@ -308,13 +507,34 @@
       }
     },
     "Start Date" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дата начала"
+          }
+        }
+      }
     },
     "Step Title" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Название шага"
+          }
+        }
+      }
     },
     "Tasks" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Цели"
+          }
+        }
+      }
     },
     "User name" : {
       "localizations" : {
@@ -327,19 +547,54 @@
       }
     },
     "Write a title" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Напишите название"
+          }
+        }
+      }
     },
     "Write your email" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите email"
+          }
+        }
+      }
     },
     "Write your message" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите сообщение"
+          }
+        }
+      }
     },
     "Your AI assistant" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Твой ИИ ассистент"
+          }
+        }
+      }
     },
     "Your AI assistant is typing" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ИИ ассистент печатает"
+          }
+        }
+      }
     },
     "Выберите дни" : {
 

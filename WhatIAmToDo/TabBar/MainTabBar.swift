@@ -11,7 +11,6 @@ struct MainTabBar: View {
     @State private var selectedTab = 0
 
     var body: some View {
-        NavigationStack {
             TabView(selection: $selectedTab) {
                 HomeView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
@@ -38,8 +37,6 @@ struct MainTabBar: View {
                     }
                     .tag(2)
             }
-        }
-        .navigationTitle("")
             .background(Color(UIColor.systemBackground).ignoresSafeArea())
             .ignoresSafeArea()
         }

@@ -12,15 +12,16 @@ struct AllTasksView: View {
     @ObservedObject var viewModel = AllTaskViewModel(taskService: DIContainer.shared.resolve())
 
     var body: some View {
-        ZStack(alignment: .bottomTrailing) {
-            VStack(alignment: .leading) {
+        NavigationView {
+            ZStack(alignment: .bottomTrailing) {
+                VStack(alignment: .leading) {
                     title
-                SearchBarView(
-                    text: $viewModel.queryString,
-                    selectedCategory: $viewModel.selectedCategory,
-                    selectedCategoryColor: $viewModel.selectedCategoryColor,
-                    filters: $viewModel.filters
-                )
+                    SearchBarView(
+                        text: $viewModel.queryString,
+                        selectedCategory: $viewModel.selectedCategory,
+                        selectedCategoryColor: $viewModel.selectedCategoryColor,
+                        filters: $viewModel.filters
+                    )
                     ScrollView {
                         LazyVGrid(columns: [
                             GridItem(.flexible(), spacing: 22),
@@ -37,13 +38,15 @@ struct AllTasksView: View {
                 }
                 .background(Color.background)
                 .tint(Color.accentColor)
-            AddButton()
+                AddButton()
+            }
+            .padding(25)
+            .background(Color.background)
+            .onAppear {
+                viewModel.updateData()
+            }
         }
-        .padding(25)
-        .background(Color.background)
-        .onAppear {
-            viewModel.updateData()
-        }
+        .navigationTitle("")
     }
     
     private var title: some View {

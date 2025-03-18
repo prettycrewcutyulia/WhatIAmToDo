@@ -28,7 +28,7 @@ struct ChooseTaskBar: View {
             }
         } label: {
             HStack {
-                Text(goal?.title ?? "Choose your task")
+                Text(goal?.title ?? NSLocalizedString("Choose your task", comment: "Prompt to choose a task"))
                     .font(.system(size: 16))
                     .fontWeight(goal?.title == nil ? .light : .bold)
                     .foregroundColor(goal?.title == nil ? .gray : .accent)

@@ -31,6 +31,9 @@ struct WhatIAmToDoApp: App {
 //                }
                 if launchScreenState.state != .finished {
                     LaunchScreenView()
+                        .onAppear {
+                            launchScreenState.start()
+                        }
                 }
             }
             .environment(\.locale, Locale(identifier: usersDefaultService.selectedLanguage))

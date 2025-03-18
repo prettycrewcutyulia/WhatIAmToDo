@@ -46,15 +46,15 @@ struct HomeView: View {
                let stepsCount = viewModel.goal?.steps.count,
                stepsCount != 0
             {
-                ProgressView(progress: "\(completedSteps)/\(stepsCount)", title: "Progress")
+                ProgressView(progress: "\(completedSteps)/\(stepsCount)", title:  NSLocalizedString("Progress", comment: "progress"))
             } else {
-                ProgressView(progress: nil, title: "Progress")
+                ProgressView(progress: nil, title: NSLocalizedString("Progress", comment: "progress"))
             }
             Spacer()
             if let differenceInDays = viewModel.goal?.startDate?.distance(to: Date()) {
-                ProgressView(progress: "\(Int(differenceInDays / (60 * 60 * 24)) + 1)", title: "Days")
+                ProgressView(progress: "\(Int(differenceInDays / (60 * 60 * 24)) + 1)", title: NSLocalizedString("Days", comment: "days"))
             } else {
-                ProgressView(progress: nil, title: "Days")
+                ProgressView(progress: nil, title:  NSLocalizedString("Days", comment: "days"))
             }
         }
     }

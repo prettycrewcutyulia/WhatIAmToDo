@@ -87,9 +87,10 @@ struct AddEditTaskView: View {
                                         .foregroundColor(.primary)
                                 }
                                 
-                                TextField("Step Title", text: $viewModel.steps[index].title)
+                                TextField("Step Title", text: $viewModel.steps[index].title, axis: .vertical)
                                     .strikethrough(viewModel.steps[index].isCompleted, color: .primary)
                                     .disabled(viewModel.steps[index].isCompleted)
+                                    .lineLimit(nil)
                                 
                                 Spacer()
                             }
@@ -98,8 +99,9 @@ struct AddEditTaskView: View {
                         
                         if viewModel.showNewStepField {
                             HStack {
-                                TextField("New step", text: $viewModel.newStepTitle)
+                                TextField("New step", text: $viewModel.newStepTitle, axis: .vertical)
                                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                                    .lineLimit(nil)
                                 
                                 Button(action: {
                                     viewModel.addStep()
@@ -145,11 +147,11 @@ struct AddEditTaskView: View {
                     Spacer()
                 }
             }
-                .padding(.horizontal)
-                .background(Color.background)
-                .foregroundStyle(Color.accentColor)
-                .navigationBarTitleDisplayMode(.inline)
-            }
+            .padding(.horizontal)
+            .background(Color.background)
+            .foregroundStyle(Color.accentColor)
+        }
+        .navigationTitle("")
     }
     
     var filtersView: some View {

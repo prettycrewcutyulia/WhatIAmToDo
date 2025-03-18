@@ -11,18 +11,21 @@ import Lottie
 struct AccountView: View {
     @ObservedObject private var viewModel = AccountViewModel(userDefaults: DIContainer.shared.resolve())
     var body: some View {
-        VStack(alignment: .leading, spacing: 26) {
-            Text("Profile and Settings")
-                .font(.targetFont(size: 20.3))
-                .fontWeight(.heavy)
-                .fontDesign(.rounded)
-                .foregroundStyle(Color.accentColor)
-            ProfileView(viewModel: viewModel)
-                .frame(height: 142)
-            SettingsView(viewModel: viewModel)
-            Spacer()
+        NavigationView {
+            VStack(alignment: .leading, spacing: 26) {
+                Text("Profile and Settings")
+                    .font(.targetFont(size: 20.3))
+                    .fontWeight(.heavy)
+                    .fontDesign(.rounded)
+                    .foregroundStyle(Color.accentColor)
+                ProfileView(viewModel: viewModel)
+                    .frame(height: 142)
+                SettingsView(viewModel: viewModel)
+                Spacer()
+            }
+            .padding(20)
+            .background(Color.background)
         }
-        .padding(20)
     }
 }
 
@@ -175,21 +178,25 @@ struct SettingsView: View {
     }
     
     var notificationMenuView: some View {
-        HStack {
-            Text("Notification")
-                .font(.targetFont(size: 16))
-                .fontWeight(.heavy)
-                .fontDesign(.rounded)
-            Spacer()
-
-            Image(systemName: "chevron.right")
+        NavigationLink(destination: ReminderView().navigationTitle("")) {
+            HStack {
+                Text("Notification")
+                    .font(.targetFont(size: 16))
+                    .fontWeight(.heavy)
+                    .fontDesign(.rounded)
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+            }
+            .padding(15)
+            .background(Color.white)
+            .cornerRadius(12)
+//            .onTapGesture {
+//                viewModel.openTgBot()
+//            }
         }
-        .padding(15)
-        .background(Color.white)
-        .cornerRadius(12)
-        .onTapGesture {
-            viewModel.openTgBot()
-        }
+        .navigationTitle("")
+//        .navigationBarHidden(true)
     }
 }
 

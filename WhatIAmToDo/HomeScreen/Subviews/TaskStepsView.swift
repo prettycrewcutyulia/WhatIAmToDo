@@ -49,6 +49,7 @@ struct StepView: View {
             }
             Text(title)
                 .font(.targetFont(size: 16))
+                .lineLimit(nil)
         }
     }
 }

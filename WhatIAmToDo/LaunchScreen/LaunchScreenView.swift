@@ -27,7 +27,7 @@ struct LaunchScreenView: View {
             backgroundColor
             LottieView(animation: .named("launchAnimation.json"))
                 .playing(loopMode: .loop)
-        }.onReceive(animationTimer) { timerValue in
+        }.onReceive(animationTimer) { _ in
             updateAnimation()
         }.opacity(startFadeoutAnimation ? 0 : 1)
     }
