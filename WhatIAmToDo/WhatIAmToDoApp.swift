@@ -24,11 +24,13 @@ struct WhatIAmToDoApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack {
-//                if usersDefaultService.isUserRegistered() {
-                    MainTabBar()
-//                } else {
-//                    AuthorizationScreen()
-//                }
+                if launchScreenState.state == .secondStep || launchScreenState.state == .finished {
+                    if usersDefaultService.isUserRegistered() {
+                        MainTabBar()
+                    } else {
+                        AuthorizationScreen()
+                    }
+                }
                 if launchScreenState.state != .finished {
                     LaunchScreenView()
                         .onAppear {

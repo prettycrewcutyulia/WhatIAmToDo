@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Category: Identifiable, Hashable, Decodable {
-    var id: String
+    var id: Int
     var title: String
     var colorHex: String
     
@@ -18,7 +18,7 @@ struct Category: Identifiable, Hashable, Decodable {
     
     // Кастомный инициализатор для Decodable
     private enum CodingKeys: String, CodingKey {
-        case id
+        case id = "filterId"
         case title
         case colorHex = "color" // Здесь мы указываем, что colorHex декодируется из поля "color"
     }
@@ -46,7 +46,7 @@ extension UIColor {
         
         var rgb: UInt64 = 0
         guard Scanner(string: hexSanitized).scanHexInt64(&rgb) else { return nil }
-
+        
         let length = hexSanitized.count
         var r, g, b, a: UInt64
         switch length {
@@ -57,7 +57,7 @@ extension UIColor {
         default:
             return nil
         }
-
+        
         self.init(
             red: CGFloat(r) / 255.0,
             green: CGFloat(g) / 255.0,
@@ -66,28 +66,21 @@ extension UIColor {
         )
     }
     
-    func toHexString(includeAlpha: Bool = false) -> String? {
-            var red: CGFloat = 0
-            var green: CGFloat = 0
-            var blue: CGFloat = 0
-            var alpha: CGFloat = 0
-            
-            guard self.getRed(&red, green: &green, blue: &blue, alpha: &alpha) else {
-                // Поддержка только RGB цветов
-                return nil
-            }
-
-            if includeAlpha {
-                return String(format: "#%02X%02X%02X%02X",
-                              Int(red * 255),
-                              Int(green * 255),
-                              Int(blue * 255),
-                              Int(alpha * 255))
-            } else {
-                return String(format: "#%02X%02X%02X",
-                              Int(red * 255),
-                              Int(green * 255),
-                              Int(blue * 255))
-            }
+    func toHexString() -> String? {
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        
+        guard self.getRed(&red, green: &green, blue: &blue, alpha: &alpha) else {
+            // Поддержка только RGB цветов
+            return nil
         }
+        
+        return String(format: "#%02X%02X%02X%02X",
+                      Int(red * 255),
+                      Int(green * 255),
+                      Int(blue * 255),
+                      Int(alpha * 255))
+    }
 }

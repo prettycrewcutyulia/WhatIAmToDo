@@ -8,7 +8,7 @@ import SwiftUI
 
 struct SearchBarView: View {
     @Binding var text: String
-    @Binding var selectedCategory: String?
+    @Binding var selectedCategory: Int?
     @Binding var selectedCategoryColor: Color
     @Binding var filters: [Category]
     @State private var isEditing = false

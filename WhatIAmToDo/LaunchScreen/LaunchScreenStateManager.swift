@@ -10,7 +10,7 @@ import Foundation
 
 final class LaunchScreenStateManager: ObservableObject {
 // TODO: поменять на firstStep как только пройдет этап теста
-@MainActor @Published private(set) var state: LaunchScreenStep = .secondStep
+    @MainActor @Published private(set) var state: LaunchScreenStep = .firstStep
     
     func start() {
         zeroFetch()

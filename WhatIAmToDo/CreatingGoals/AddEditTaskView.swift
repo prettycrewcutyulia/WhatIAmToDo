@@ -2,9 +2,16 @@ import SwiftUI
 
 struct AddEditTaskView: View {
     @StateObject private var viewModel: TaskViewModel
+    @Environment(\.dismiss) var dismiss
     
     init(task: Goal? = nil) {
-        _viewModel = StateObject(wrappedValue: TaskViewModel(task: task, taskService: DIContainer.shared.resolve()))
+        _viewModel = StateObject(
+            wrappedValue: TaskViewModel(
+                task: task,
+                taskService: DIContainer.shared.resolve(),
+                userDefaultsService: DIContainer.shared.resolve()
+            )
+        )
     }
     
     var body: some View {
@@ -98,7 +105,7 @@ struct AddEditTaskView: View {
                                     Spacer()
                                     if let stepDeadline = viewModel.steps[index].deadline {
                                         DatePicker(
-                                            "Step Deadline",
+                                            "Deadline",
                                             selection: Binding(get: {
                                                 stepDeadline
                                             }, set: { newDate in
@@ -165,9 +172,9 @@ struct AddEditTaskView: View {
                     
                     Button("Save") {
                         if viewModel.isEditing {
-                            viewModel.updateGoal()
+                            viewModel.updateGoal(dismiss: { dismiss() })
                         } else {
-                            viewModel.saveGoal()
+                            viewModel.saveGoal(dismiss: { dismiss() })
                         }
                     }
                     .padding()
@@ -185,13 +192,17 @@ struct AddEditTaskView: View {
         .navigationTitle("")
     }
     
+    fileprivate func getFilterColor(category: Int) -> (some View)? {
+        viewModel.filters.filter { $0.id  == category }.first?.color
+            .frame(width: 23, height: 23)
+            .cornerRadius(3)
+    }
+    
     var filtersView: some View {
         HStack {
             Text("Filters")
             ForEach(Array(viewModel.categories), id: \.self) { category in
-                category.color
-                    .frame(width: 23, height: 23)
-                    .cornerRadius(3)
+                getFilterColor(category: category)
             }
         }
         .onTapGesture {

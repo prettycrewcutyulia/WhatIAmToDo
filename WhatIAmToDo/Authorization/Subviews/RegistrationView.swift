@@ -16,12 +16,11 @@ struct RegistrationView: View {
     @State private var match: Bool = false
     private var isLoading: Bool = false
     @State private var errorName: String? = nil
-    @State private var isErrorShown: Bool = false
     @State private var isEmailValid: Bool = true
     
-    var onCompleteRegistration: ((RegistrationRequest) -> String?)?
+    var onCompleteRegistration: ((RegistrationRequest) -> Void)?
     
-    init(onCompleteRegistration: ((RegistrationRequest) -> String?)? = nil) {
+    init(onCompleteRegistration: ((RegistrationRequest) -> Void)? = nil) {
         self.onCompleteRegistration = onCompleteRegistration
     }
     
@@ -82,16 +81,13 @@ struct RegistrationView: View {
             Button(action: {
                 match = !username.isEmpty && email.isEmpty && password.isEmpty
                 if passwordsMatch {
-                    errorName = onCompleteRegistration?(
+                   onCompleteRegistration?(
                         RegistrationRequest(
-                            userName: username,
+                            nickname: username,
                             email: email,
                             password: password
                         )
                     )
-                    if errorName != nil {
-                        isErrorShown = true
-                    }
                 }
             }) {
                 Text("Sign Up")
@@ -109,13 +105,13 @@ struct RegistrationView: View {
             RoundedCornersShape(corners: [.topLeft, .topRight], radius: 33)
                 .fill(Color.white)
         )
-        .alert(isPresented: $isErrorShown) {
-            Alert(
-                title: Text("Something went wrong. Try again later"),
-                message: Text(errorName ?? ""),
-                dismissButton: .default(Text("OK"))
-            )
-        }
+//        .alert(isPresented: $isErrorShown) {
+//            Alert(
+//                title: Text("Something went wrong. Try again later"),
+//                message: Text(errorName ?? ""),
+//                dismissButton: .default(Text("OK"))
+//            )
+//        }
     }
     
     // Функция проверки валидности email

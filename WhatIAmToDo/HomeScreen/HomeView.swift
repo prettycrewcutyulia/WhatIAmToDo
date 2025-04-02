@@ -8,27 +8,29 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject private var viewModel = HomeViewModel(taskService: DIContainer.shared.resolve()) // Initialize the view model
+    @StateObject private var viewModel = HomeViewModel(taskService: DIContainer.shared.resolve())
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Constants.spacing) {
                 title
-                ChooseTaskBar(goal: $viewModel.goal, allGoals: $viewModel.tasks) // Bind goal to viewModel
+                ChooseTaskBar(goal: $viewModel.goal, allGoals: $viewModel.tasks, updateGoal: viewModel.updateGoal) // Bind goal to viewModel
                 CalendarView(selectedDates: $viewModel.selectedDates) // Bind selectedDates to viewModel
                 
                 progressStack
                 
-                if let goal = viewModel.goal,
-                   goal.steps.count > 0
+                if viewModel.goal?.steps.count ?? -1 > 0
                 {
-                    TaskStepsView(checkListData: goal.steps)
+                    taskStepView
                 }
             }
             .padding(Constants.paddingInsets)
         }
         .onAppear {
             viewModel.updateData()
+        }
+        .onDisappear {
+            viewModel.updateGoal()
         }
     }
     
@@ -39,21 +41,38 @@ struct HomeView: View {
     
     private var progressStack: some View {
         HStack {
-            if let completedSteps = viewModel.goal?.completedSteps,
-               let stepsCount = viewModel.goal?.steps.count,
-               stepsCount != 0
-            {
-                ProgressView(progress: "\(completedSteps)/\(stepsCount)")
-            } else {
-                ProgressView(progress: nil)
-            }
+            ProgressView(progress: $viewModel.progress)
             Spacer()
-            if let differenceInDays = viewModel.goal?.startDate?.distance(to: Date()) {
-                ProgressViewDays(progress: "\(Int(differenceInDays / (60 * 60 * 24)) + 1)")
-            } else {
-                ProgressView(progress: nil)
-            }
+            ProgressViewDays(progress: $viewModel.progressDate)
         }
+    }
+    
+    private var taskStepView: some View {
+            VStack(alignment: .leading, spacing: 23) {
+                Text("Mark your steps")
+                    .font(.targetFont(size: 16).width(.expanded))
+                    .fontWeight(.heavy)
+                    .fontDesign(.rounded)
+                    .fontWidth(.expanded)
+                    .foregroundStyle(.accent)
+                if let goalLet = viewModel.goal {
+                    ForEach(goalLet.steps.indices, id: \.self) { index in
+                        StepView(item: Binding(
+                            get: { goalLet.steps[index] },
+                            set: {
+                                viewModel.goal?.steps[index] = $0
+                                print("set")
+                            }
+                        ))
+                    }
+                    .font(.targetFont(size: 16))
+                }
+            }
+            .padding(.horizontal, 35)
+            .padding(.vertical, 30)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Color.white)
+            .cornerRadius(12)
     }
 }
 

@@ -28,7 +28,7 @@ struct AllTasksView: View {
                             GridItem(.flexible(), spacing: 22)
                         ], spacing: 22) {
                             ForEach(viewModel.filteredTasks) { task in
-                                TaskItemView(goal: task)
+                                TaskItemView(goal: task, filters: viewModel.filters)
                             }
                         }
                     }

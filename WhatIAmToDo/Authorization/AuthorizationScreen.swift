@@ -11,7 +11,10 @@ struct AuthorizationScreen: View {
     @ObservedObject private var viewModel: AuthorizationViewModel
     
     init() {
-        self.viewModel = AuthorizationViewModel(userDefaults: DIContainer.shared.resolve())
+        self.viewModel = AuthorizationViewModel(
+            userDefaults: DIContainer.shared.resolve(),
+            authenticationService: DIContainer.shared.resolve()
+        )
     }
 
     var body: some View {
@@ -64,6 +67,10 @@ struct AuthorizationScreen: View {
                 .offset(y: 40)
             }
         }
+        .fullScreenCover(
+            isPresented: $viewModel.isMainShown,
+            content: { MainTabBar() }
+        )
     }
     
     

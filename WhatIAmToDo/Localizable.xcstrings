@@ -35,7 +35,14 @@
       }
     },
     "AI" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ИИ"
+          }
+        }
+      }
     },
     "Become the best version of yourself, start tracking your goals" : {
       "localizations" : {
@@ -124,6 +131,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Дедлайн"
+          }
+        }
+      }
+    },
+    "Deadline:" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дедлайн:"
           }
         }
       }
@@ -299,6 +316,7 @@
       }
     },
     "OK" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -503,6 +521,7 @@
       }
     },
     "Something went wrong. Try again later" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -518,16 +537,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Дата начала"
-          }
-        }
-      }
-    },
-    "Step Deadline" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Дедлайн шага"
           }
         }
       }
@@ -591,6 +600,9 @@
           }
         }
       }
+    },
+    "Write your name" : {
+
     },
     "Your AI assistant" : {
       "localizations" : {

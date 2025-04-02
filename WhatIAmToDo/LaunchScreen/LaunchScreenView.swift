@@ -11,7 +11,8 @@ import Lottie
 
 struct LaunchScreenView: View {
     @EnvironmentObject private var launchScreenState: LaunchScreenStateManager
-    @State private var animation = false //  Mark 2
+    @State private var firstAnimation = false  // Mark 2
+    @State private var secondAnimation = false // Mark 2
     @State private var startFadeoutAnimation = false
     @ViewBuilder
     private var backgroundColor: some View {  // Mark 3
@@ -33,17 +34,21 @@ struct LaunchScreenView: View {
     }
     
     private func updateAnimation() { // Mark 5
-        switch launchScreenState.state {  
-        case .secondStep:
-            if animation == false {
-                withAnimation(.linear) {
-                    self.animation = true
-                    startFadeoutAnimation = true
-                }
-            }
-        case .firstStep, .finished:
-            // use this case to finish any work needed
-            break
+        switch launchScreenState.state {
+        case .firstStep:
+                   withAnimation(.easeInOut(duration: 0.9)) {
+                       firstAnimation.toggle()
+                   }
+               case .secondStep:
+                   if secondAnimation == false {
+                       withAnimation(.linear) {
+                           self.secondAnimation = true
+                           startFadeoutAnimation = true
+                       }
+                   }
+               case .finished:
+                   // use this case to finish any work needed
+                   break
         }
     }
     

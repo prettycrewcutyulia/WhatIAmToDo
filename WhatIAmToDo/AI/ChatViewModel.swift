@@ -19,6 +19,17 @@ class ChatViewModel: ObservableObject {
     
     private var request: String?
     private var AIGoalResponse: GoalPlan?
+    private var userDefaultsService: any UserDefaultsService
+    private var taskService: any TaskService
+    
+    init(
+        userDefaultsService: any UserDefaultsService,
+         taskService: any TaskService
+    ) {
+        self.userDefaultsService = userDefaultsService
+        self.taskService = taskService
+        
+    }
 
     func sendMessage() {
         guard !userInput.isEmpty else { return }
@@ -32,7 +43,6 @@ class ChatViewModel: ObservableObject {
         isTyping = true
         aiResponded = false
 
-        // Simulating AI response delay
         
         let taskService: TaskService = DIContainer.shared.resolve()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -98,9 +108,17 @@ class ChatViewModel: ObservableObject {
     }
     
     func safeAnswer() {
-        let taskService: TaskService = DIContainer.shared.resolve()
+        
+        var user = userDefaultsService.getUserIdAndUserToken()
+        guard let id = user?.userId else {
+            // TODO: добавить обработку ошибок
+            return
+        }
         if let AIGoalResponse {
-            taskService.createGoal(goalRequest: GoalRequest.init(userId: "1", goal: AIGoalResponse), completion: { _ in })
+            taskService.createGoal(
+                goalRequest: GoalRequest.init(userId: id, goal: AIGoalResponse),
+                completion: { _ in }
+            )
         }
         
         aiResponded = false

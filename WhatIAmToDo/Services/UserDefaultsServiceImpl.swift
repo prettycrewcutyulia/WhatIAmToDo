@@ -18,6 +18,10 @@ class UserDefaultsServiceImpl: UserDefaultsService {
     private let isRegisteredKey = "isRegisteredKey"
     private let localeKey = "localeKey"
     private let defaults = UserDefaults.standard
+    private let userIdKey = "userIdKey"
+    private let tokenKey = "tokenKey"
+    private let nameKey = "nameKey"
+    private let emailKey = "emailKey"
     
     private init() {
         selectedLanguage = UserDefaults.standard.string(forKey: localeKey) ?? "en"
@@ -65,4 +69,36 @@ class UserDefaultsServiceImpl: UserDefaultsService {
         }
         defaults.synchronize()
     }
+    
+    @MainActor func setLoginResponseData(response: LoginResponse) async {
+        defaults.set(response.id, forKey: userIdKey)
+        defaults.set(response.token, forKey: tokenKey)
+        defaults.set(response.name, forKey: nameKey)
+        defaults.set(response.email, forKey: emailKey)
+        
+        defaults.synchronize()
+    }
+    
+    func getUserIdAndUserToken() -> (userId: Int, userToken: String)? {
+        let userId = defaults.integer(forKey: userIdKey)
+        let token = defaults.string(forKey: tokenKey)
+        
+        if userId > 0, let token {
+            return (userId, token)
+        }
+        
+        return nil
+    }
+    
+    func getUserData() -> (name: String, email: String)? {
+        let name = defaults.string(forKey: nameKey) ?? ""
+        let email = defaults.string(forKey: emailKey) ?? ""
+        
+        if !name.isEmpty, !email.isEmpty {
+            return (name, email)
+        }
+        
+        return nil
+    }
+    
 }

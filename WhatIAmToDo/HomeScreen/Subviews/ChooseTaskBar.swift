@@ -10,12 +10,14 @@ import SwiftUI
 struct ChooseTaskBar: View {
     @Binding var goal: Goal?
     @Binding var allGoals: [Goal]
+    let updateGoal: () -> Void
     
     var body: some View {
         Menu {
             // Loop through allGoals to display each as a menu item
             ForEach(allGoals, id: \.self) { eachGoal in
                 Button(action: {
+                    updateGoal()
                     goal = eachGoal
                 }) {
                     HStack {

@@ -8,11 +8,7 @@
 import SwiftUI
 
 struct ProgressView: View {
-    @State var progress: String
-    
-    init(progress: String?) {
-        self.progress = progress ?? "⎯"
-    }
+    @Binding var progress: String
 
     var body: some View {
         ZStack {
@@ -38,11 +34,7 @@ struct ProgressView: View {
 }
 
 struct ProgressViewDays: View {
-    @State var progress: String
-    
-    init(progress: String?) {
-        self.progress = progress ?? "⎯"
-    }
+    @Binding var progress: String
 
     var body: some View {
         ZStack {

@@ -14,7 +14,7 @@ struct AuthorizationStack: View {
     @State var email: String = ""
     @State var password: String = ""
     @State private var isForgotPasswordPresented: Bool = false
-    var didTapLogin: (AuthRequest) -> String?
+    var didTapLogin: (AuthRequest) -> Void
     var didTapForgotPassword: (String) -> String?
 
     var body: some View {

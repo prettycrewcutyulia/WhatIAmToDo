@@ -9,14 +9,14 @@ import Combine
 
 class AllTaskViewModel: ObservableObject {
     @Published var queryString = ""
-    @Published var selectedCategory: String?
+    @Published var selectedCategory: Int?
     @Published var selectedCategoryColor: Color = .background
     
     @Published var filters: [Category]
 
     var filteredTasks: [Goal] {
         tasks.filter { task in
-            (selectedCategory == nil || task.category.contains(where: {$0.id == selectedCategory})) &&
+            (selectedCategory == nil || task.categoryId.contains(where: {$0 == selectedCategory})) &&
             (queryString.isEmpty || task.title.lowercased().contains(queryString.lowercased()))
         }
     }

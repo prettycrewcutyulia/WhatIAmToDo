@@ -8,7 +8,7 @@ import SwiftUI
 
 struct FiltersBottomSheetView: View {
     
-    @Binding var selectedCategory: String?
+    @Binding var selectedCategory: Int?
     @Binding var selectedColor: Color
     @Binding var filters: [Category]
     @Binding var isPresented: Bool
@@ -51,17 +51,36 @@ struct FiltersBottomSheetView: View {
                             if let index = editingFilterIndex {
                                 let filterId = filters[index].id
                                 filters[index] = Category(id: filterId, title: filterName, colorHex: UIColor(filterColor).toHexString() ?? "")
-                                taskService.updateFilter(id: filterId, updateRequest: UpdateFilterRequest(title: filterName, color: UIColor(filterColor).toHexString() ?? ""), completion:  { _ in })
+                                taskService.updateFilter(
+                                    updateRequest: UpdateFilterRequest(
+                                        id: filterId,
+                                        title: filterName,
+                                        color: UIColor(filterColor).toHexString() ?? ""
+                                    ),
+                                    completion: {
+                                        res in
+                                        switch res {
+                                        case let .success(newFilters):
+                                            filters = newFilters
+                                        case .failure(_):
+                                            print("Не удалось сохранить фильтр")
+                                        }
+                                    }
+                                )
                                 filterName = ""
                                 editingFilterIndex = nil
                                 filterColor = Constants.defaultColor
                             } else {
-                                filters.append(Category(
-                                    id: UUID().uuidString,
-                                    title: filterName,
-                                    colorHex: UIColor(filterColor).toHexString() ?? ""
-                                ))
-                                taskService.createFilter(newFilter: UpdateFilterRequest(title: filterName, color: UIColor(filterColor).toHexString() ?? ""), completion: { _ in })
+                                taskService.createFilter(newFilter: UpdateFilterRequest(id: nil, title: filterName, color: UIColor(filterColor).toHexString() ?? ""), completion: {
+                                    res in
+                                    switch res {
+                                    case let .success(newFilters):
+                                        filters = newFilters
+                                    case .failure(_):
+                                        print("Не удалось сохранить фильтр")
+                                    }
+                                })
+                                
                             }
                         }
                     }

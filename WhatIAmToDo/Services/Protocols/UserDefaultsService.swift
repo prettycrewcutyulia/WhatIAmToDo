@@ -24,4 +24,9 @@ protocol UserDefaultsService: ObservableObject {
 
     // Метод для установки конкретной локали на основе переданного значения
     func setAnotherLocale(locale: String) async
+    
+    func setLoginResponseData(response: LoginResponse) async
+    
+    func getUserIdAndUserToken() -> (userId: Int, userToken: String)?
+    func getUserData() -> (name: String, email: String)?
 }

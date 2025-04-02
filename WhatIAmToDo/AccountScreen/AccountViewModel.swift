@@ -20,6 +20,11 @@ class AccountViewModel: ObservableObject {
     init(userDefaults: any UserDefaultsService) {
         self.selectedLanguage = userDefaults.getCurrentLocale()
         self.userDefaults = userDefaults
+        
+        let userData = userDefaults.getUserData()
+        guard let userData = userData else { return }
+        self.name = userData.name
+        self.mail = userData.email
     }
     
     func changeLanguage(_ language: String) {

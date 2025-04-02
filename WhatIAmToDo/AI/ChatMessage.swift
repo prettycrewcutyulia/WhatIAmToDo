@@ -15,7 +15,10 @@ struct ChatMessage: Identifiable {
 }
 
 struct ChatView: View {
-    @StateObject private var viewModel = ChatViewModel()
+    @StateObject private var viewModel = ChatViewModel(
+        userDefaultsService: DIContainer.shared.resolve(),
+        taskService: DIContainer.shared.resolve()
+    )
 
     var body: some View {
         VStack(alignment: .leading) {

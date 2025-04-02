@@ -74,7 +74,7 @@ struct ProfileView: View {
     var description: some View {
         VStack(alignment: .leading, spacing: 6) {
             if isEditingName {
-                TextField("Write your message", text: $viewModel.name)
+                TextField("Write your name", text: $viewModel.name)
                     .font(.targetFont(size: 16))
                     .fontWeight(.heavy)
                     .fontDesign(.rounded)
@@ -188,12 +188,8 @@ struct SettingsView: View {
             .padding(15)
             .background(Color.white)
             .cornerRadius(12)
-//            .onTapGesture {
-//                viewModel.openTgBot()
-//            }
         }
         .navigationTitle("")
-//        .navigationBarHidden(true)
     }
 }
 

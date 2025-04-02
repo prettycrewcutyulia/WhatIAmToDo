@@ -15,7 +15,7 @@ struct AddButton: View {
             if showExtraButtons {
                 NavigationLink(destination: ChatView().navigationTitle("")) {
                     Text("AI")
-                        .font(.targetFont(size: 20))
+                        .font(.targetFont(size: 16))
                         .fontWeight(.bold)
                         .fontDesign(.rounded)
                         .frame(width: 25, height: 25)
@@ -34,7 +34,8 @@ struct AddButton: View {
                         .frame(width: 55, height: 55)
                         .background(Color.white)
                         .cornerRadius(12)
-                }        .navigationTitle("")
+                }
+                .navigationTitle("")
             }
             
             Button(action: {

@@ -8,9 +8,9 @@
 import Foundation
 
 struct Goal: Identifiable, Hashable, Decodable {
-    var id: String
+    var id: Int
     var title: String
-    var category: [Category]
+    var categoryId: [Int]
     var steps: [Step]
     var startDate: Date?
     var deadline: Date?
@@ -21,7 +21,7 @@ struct Goal: Identifiable, Hashable, Decodable {
 }
 
 struct Step: Identifiable, Hashable, Decodable {
-    let id: String?
+    let id: Int?
     var title: String
     var isCompleted: Bool = false
     var deadline: Date?

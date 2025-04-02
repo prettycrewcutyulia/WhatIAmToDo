@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FiltersBottomSheetSelectedView: View {
     
-    @Binding var selectedCategory: Set<Category>
+    @Binding var selectedCategory: Set<Int>
     var filters: [Category]
     @Binding var isPresented: Bool
 
@@ -37,7 +37,7 @@ struct FiltersBottomSheetSelectedView: View {
                         
                         Spacer()
                         
-                        if selectedCategory.contains(filter) {
+                        if selectedCategory.contains(filter.id) {
                             Image(systemName: "checkmark")
                                 .resizable()
                                 .frame(width: 18, height: 18)
@@ -49,10 +49,10 @@ struct FiltersBottomSheetSelectedView: View {
                     .background(.white)
                     .cornerRadius(12)
                     .onTapGesture {
-                        if selectedCategory.contains(filter) {
-                            selectedCategory.remove(filter)
+                        if selectedCategory.contains(filter.id) {
+                            selectedCategory.remove(filter.id)
                         } else {
-                            selectedCategory.insert(filter)
+                            selectedCategory.insert(filter.id)
                         }
                     }
                 }

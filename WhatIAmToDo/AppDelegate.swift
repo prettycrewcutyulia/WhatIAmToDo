@@ -22,7 +22,10 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         let userDefaultsRepository: any UserDefaultsService = UserDefaultsServiceImpl.shared
         DIContainer.shared.register(userDefaultsRepository)
         
-        let serviceTask: any TaskService = TaskServiceImpl()
+        let authenticationService: any AuthorizationService = AuthorizationServiceImpl();
+        DIContainer.shared.register(authenticationService)
+        
+        let serviceTask: any TaskService = TaskServiceImpl(userDefaults: userDefaultsRepository)
         DIContainer.shared.register(serviceTask)
         
         let launchService = LaunchScreenStateManager()

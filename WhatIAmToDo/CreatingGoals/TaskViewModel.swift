@@ -15,22 +15,23 @@ class TaskViewModel: ObservableObject {
     @Published var deadline: Date?
     @Published var newStepTitle: String = ""
     @Published var showNewStepField: Bool = false
-    @Published var categories: Set<Category>
+    @Published var categories: Set<Int>
     @Published var isBottomSheetPresented = false
     
     var filters: [Category]
     let isEditing: Bool
-    var goalId: String?
+    var goalId: Int?
     let taskService: TaskService
+    let userDefaultsService: any UserDefaultsService
     
-    init(task: Goal? = nil, taskService: TaskService) {
+    init(task: Goal? = nil, taskService: TaskService, userDefaultsService: any UserDefaultsService) {
         if let task = task {
             self.goalId = task.id
             self.taskTitle = task.title
             self.steps = task.steps
             self.startDate = task.startDate
             self.deadline = task.deadline
-            self.categories = Set(task.category)
+            self.categories = Set(task.categoryId)
             self.isEditing = true
         } else {
             self.taskTitle = ""
@@ -43,6 +44,7 @@ class TaskViewModel: ObservableObject {
         
         filters = taskService.filters
         self.taskService = taskService
+        self.userDefaultsService = userDefaultsService
     }
     
     func toggleStepCompletion(index: Int) {
@@ -51,7 +53,8 @@ class TaskViewModel: ObservableObject {
     
     func addStep() {
         if !newStepTitle.isEmpty {
-            steps.append(Step(id: UUID().uuidString, title: newStepTitle))
+            // TODO: Перепроверить
+            steps.append(Step(id: UUID().hashValue, title: newStepTitle))
             newStepTitle = ""
             showNewStepField = false
         }
@@ -81,33 +84,59 @@ class TaskViewModel: ObservableObject {
         steps[index].deadline = nil
     }
     
-    func saveGoal() {
+    func saveGoal(dismiss: @escaping () -> Void) {
+        var userId = userDefaultsService.getUserIdAndUserToken()?.userId
+        guard let userId else {
+            // TODO: Вернуть ошибку
+            return
+        }
         taskService.createGoal(
             goalRequest: GoalRequest(
-                userId: "1",
+                userId: userId,
                 title: taskTitle,
-                categories: categories.map{ CategoryRequest(id: $0.id) },
+                categories: categories.map{ $0 },
                 steps: steps.map{ StepRequest(title: $0.title, isCompleted: $0.isCompleted) },
                 startDate: startDate,
                 deadline: deadline
             ),
-            completion: {_ in }
+            completion: { res in
+                switch res {
+                case .success(_):
+                    Task { @MainActor in
+                        dismiss()
+                    }
+                case .failure(_):
+                    print("Не получилось обновить цель")
+                }
+            }
         )
     }
     
-    func updateGoal() {
+    func updateGoal(dismiss: @escaping () -> Void) {
         if let goalId {
+            var userId = userDefaultsService.getUserIdAndUserToken()?.userId
+            guard let userId else { return  // TODO: Вернуть ошибку
+            }
             taskService.updateGoal(
                 id: goalId,
                 goalRequest: GoalRequest(
-                    userId: "1",
+                    userId: userId,
                     title: taskTitle,
-                    categories: categories.map{ CategoryRequest(id: $0.id) },
+                    categories: categories.map{ $0 },
                     steps: steps.map{ StepRequest(title: $0.title, isCompleted: $0.isCompleted) },
                     startDate: startDate,
                     deadline: deadline
                 ),
-                completion: {_ in }
+                completion: { res in
+                    switch res {
+                    case .success(_):
+                        Task { @MainActor in
+                            dismiss()
+                        }
+                    case .failure(_):
+                        print("Не получилось обновить цель")
+                    }
+                }
             )
         }
     }
