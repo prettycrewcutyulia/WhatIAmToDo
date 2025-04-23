@@ -90,7 +90,7 @@ struct AddEditTaskView: View {
                                         Image(systemName: viewModel.steps[index].isCompleted ? "checkmark.square" : "square")
                                             .resizable()
                                             .frame(width: 23, height: 23)
-                                            .foregroundColor(.primary)
+                                            .foregroundColor(.accentColor)
                                     }
                                     
                                     TextField("Step Title", text: $viewModel.steps[index].title, axis: .vertical)
@@ -99,6 +99,15 @@ struct AddEditTaskView: View {
                                         .lineLimit(nil)
                                     
                                     Spacer()
+                                    
+                                    Button(action: {
+                                        viewModel.deleteStep(index: index)
+                                    }) {
+                                        Image(systemName: "trash.fill")
+                                            .resizable()
+                                            .frame(width: 23, height: 23)
+                                            .foregroundColor(.accentColor)
+                                    }
                                 }
                                 
                                 HStack {
@@ -179,9 +188,22 @@ struct AddEditTaskView: View {
                     }
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(Color(.accent))
+                    .background(Color.accentColor)
                     .foregroundColor(.white)
                     .cornerRadius(8)
+                    
+                    if viewModel.isEditing {
+
+                    Button("Delete") {
+                        viewModel.deleteGoal(dismiss: { dismiss() })
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.accentColor)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+                    }
+
                     Spacer()
                 }
             }
@@ -190,6 +212,13 @@ struct AddEditTaskView: View {
             .foregroundStyle(Color.accentColor)
         }
         .navigationTitle("")
+        .alert(isPresented: $viewModel.isErrorShown) {
+            Alert(
+                title: Text("Something went wrong. Try again later"),
+                message: Text("Couldn't process the request"),
+                dismissButton: .default(Text("OK"))
+            )
+        }
     }
     
     fileprivate func getFilterColor(category: Int) -> (some View)? {

@@ -10,7 +10,9 @@ import Combine
 
 class AuthorizationViewModel: ObservableObject {
     @Published var isAuthorized: Bool = false
-    @Published var isErrorShown: Bool = false
+    @Published var isServerErrorShown: Bool = false
+    @Published var isClientErrorShown: Bool = false
+    @Published var errorMessage = ""
     @Published var isMainShown: Bool = false
     
     private var userDefaults: any UserDefaultsService
@@ -38,18 +40,30 @@ class AuthorizationViewModel: ObservableObject {
                     Task { [weak self] in
                         await self?.userDefaults.setUserRegistered(true)
                         await self?.userDefaults.setLoginResponseData(response: success)
-                        isMainShown.toggle()
+                        await MainActor.run {
+                            isMainShown.toggle()
+                        }
                     }
-                case .failure(let failure):
-                    Task {
-                      await MainActor.run {
-                       self?.isErrorShown.toggle()
-                      }
-                     }
+                case .failure(let error):
+                    switch error {
+                    case .clientError:
+                        Task {  [weak self] in
+                            await MainActor.run {
+                                self?.isClientErrorShown.toggle()
+                                self?.errorMessage = "Неверный логин или пароль"
+                            }
+                        }
+                    case .serverError:
+                        Task {
+                            await MainActor.run {
+                                self?.isServerErrorShown.toggle()
+                                self?.errorMessage = "Проверьте соединение с интернетом и повторите попытку позже."
+                            }
+                        }
+                    }
                 }
             }
         )
-        print("login")
     }
     
     func signup(model: RegistrationRequest)  {
@@ -63,12 +77,21 @@ class AuthorizationViewModel: ObservableObject {
                         await self?.userDefaults.setLoginResponseData(response: success)
                         isMainShown.toggle()
                     }
-                case .failure(_):
-                    Task {
-                      await MainActor.run {
-                       self?.isErrorShown.toggle()
-                      }
-                     }
+                case .failure(let error):
+                    switch error {
+                    case .clientError:
+                        Task { [weak self] in
+                           isClientErrorShown.toggle()
+                            errorMessage = "Пользователь с таким логином уже существует."
+                        }
+                    case .serverError:
+                        Task {
+                            await MainActor.run {
+                                self?.isServerErrorShown.toggle()
+                                self?.errorMessage = "Проверьте соединение с интернетом и повторите попытку позже."
+                            }
+                        }
+                    }
                 }
             }
         )

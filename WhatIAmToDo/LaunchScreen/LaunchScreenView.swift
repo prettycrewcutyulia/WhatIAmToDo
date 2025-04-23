@@ -46,7 +46,7 @@ struct LaunchScreenView: View {
                            startFadeoutAnimation = true
                        }
                    }
-               case .finished:
+        case .finished, .error:
                    // use this case to finish any work needed
                    break
         }

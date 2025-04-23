@@ -17,6 +17,7 @@ class TaskViewModel: ObservableObject {
     @Published var showNewStepField: Bool = false
     @Published var categories: Set<Int>
     @Published var isBottomSheetPresented = false
+    @Published var isErrorShown = false
     
     var filters: [Category]
     let isEditing: Bool
@@ -58,6 +59,10 @@ class TaskViewModel: ObservableObject {
             newStepTitle = ""
             showNewStepField = false
         }
+    }
+    
+    func deleteStep(index: Int) {
+        steps.remove(at: index)
     }
     
     func addStartDate() {
@@ -106,7 +111,9 @@ class TaskViewModel: ObservableObject {
                         dismiss()
                     }
                 case .failure(_):
-                    print("Не получилось обновить цель")
+                    Task{ @MainActor in
+                        self.isErrorShown.toggle()
+                   }
                 }
             }
         )
@@ -134,10 +141,29 @@ class TaskViewModel: ObservableObject {
                             dismiss()
                         }
                     case .failure(_):
-                        print("Не получилось обновить цель")
+                        Task{ @MainActor in
+                            self.isErrorShown.toggle()
+                       }
                     }
                 }
             )
+        }
+    }
+    
+    func deleteGoal(dismiss: @escaping () -> Void) {
+        if let goalId {
+            taskService.deleteGoalById(id: goalId, completion: { res in
+                switch res {
+                case .success(_):
+                    Task { @MainActor in
+                        dismiss()
+                    }
+                case .failure(_):
+                    Task{ @MainActor in
+                        self.isErrorShown.toggle()
+                   }
+                }
+            })
         }
     }
 }

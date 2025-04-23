@@ -16,6 +16,13 @@ struct AuthorizationStack: View {
     @State private var isForgotPasswordPresented: Bool = false
     var didTapLogin: (AuthRequest) -> Void
     var didTapForgotPassword: (String) -> String?
+    
+    @FocusState private var focusedField: Field?
+    
+    enum Field: Hashable {
+        case email
+        case password
+    }
 
     var body: some View {
         VStack(spacing: 20) {
@@ -27,6 +34,11 @@ struct AuthorizationStack: View {
                 .textFieldStyle(PlainTextFieldStyle())
                 .autocapitalization(.none) // Отмена автокапитализации
                 .keyboardType(.emailAddress) // Использование клавиатуры для e-mail
+                .focused($focusedField, equals: .email)
+                .submitLabel(.next) // Изменение кнопки отправки на клавиатуре
+                .onSubmit {
+                    focusedField = .password // Переключение фокуса на пароль после ввода
+                }
             
             // Поле для ввода пароля
             SecureField("Password", text: $password)
@@ -34,6 +46,8 @@ struct AuthorizationStack: View {
                 .background(Color.gray.opacity(0.2))
                 .cornerRadius(12)
                 .textFieldStyle(PlainTextFieldStyle())
+                .focused($focusedField, equals: .password) // Установка фокуса на это поле
+                .submitLabel(.done) // Изменение кнопки отправки на клавиатуре
             
             // Кнопка логина
             Button(action: {
@@ -48,20 +62,20 @@ struct AuthorizationStack: View {
             }
             .disabled(email.isEmpty || password.isEmpty)
             
-            // Кнопка "Забыли пароль"
-            Button(action: {
-                isForgotPasswordPresented.toggle()
-            }) {
-                Text("Forgot Password?")
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(Color.secondary)
-            }
-            .sheet(isPresented: $isForgotPasswordPresented) {
-                EmailInputSheet(onSubmit: { email in
-                    didTapForgotPassword(email)
-                })
-                .presentationDetents([.height(250)])
-            }
+//            // Кнопка "Забыли пароль"
+//            Button(action: {
+//                isForgotPasswordPresented.toggle()
+//            }) {
+//                Text("Forgot Password?")
+//                    .frame(maxWidth: .infinity)
+//                    .foregroundColor(Color.secondary)
+//            }
+//            .sheet(isPresented: $isForgotPasswordPresented) {
+//                EmailInputSheet(onSubmit: { email in
+//                    didTapForgotPassword(email)
+//                })
+//                .presentationDetents([.height(250)])
+//            }
         }
         .padding(.horizontal, 28)
         .padding(.vertical, 33)
@@ -69,6 +83,9 @@ struct AuthorizationStack: View {
             RoundedCornersShape(corners: [.topLeft, .topRight], radius: 33)
                 .fill(Color.white)
         )
+        .onAppear {
+            focusedField = .email // При появлении вью ставим фокус на поле ввода e-mail
+        }
     }
 }
 

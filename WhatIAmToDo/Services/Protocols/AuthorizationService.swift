@@ -8,9 +8,9 @@
 protocol AuthorizationService {
     
     // Метод для получения задач с бэкенда
-    func login(model: AuthRequest, completion: @escaping (Result<LoginResponse, Error>) -> Void)
+    func login(model: AuthRequest, completion: @escaping (Result<LoginResponse, NetworkError>) -> Void)
     
     
     // Метод для получения задач с бэкенда
-    func registration(model: RegistrationRequest, completion: @escaping (Result<LoginResponse, Error>) -> Void)
+    func registration(model: RegistrationRequest, completion: @escaping (Result<LoginResponse, NetworkError>) -> Void)
 }

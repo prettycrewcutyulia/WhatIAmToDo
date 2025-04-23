@@ -11,8 +11,8 @@ import Combine
 class ChatViewModel: ObservableObject {
     @Published var userInput = ""
     @Published var messages: [ChatMessage] = [
-        ChatMessage(text: "Hello!! I'm here to help you", isFromUser: false),
-        ChatMessage(text: "Tell me what do you want to learn today?", isFromUser: false)
+        ChatMessage(text: NSLocalizedString("Hello!! I'm here to help you", comment: ""), isFromUser: false),
+        ChatMessage(text: NSLocalizedString("Tell me what do you want to learn today?", comment: ""), isFromUser: false)
     ]
     @Published var isTyping = false
     @Published var aiResponded = false
@@ -56,7 +56,7 @@ class ChatViewModel: ObservableObject {
                     self.aiResponded = true
                     
                 case .failure:
-                    let aiMessage = ChatMessage(text: "Something went wrong", isFromUser: false)
+                    let aiMessage = ChatMessage(text: NSLocalizedString("Something went wrong", comment: ""), isFromUser: false)
                     self.messages.append(aiMessage)
                     self.isTyping = false
                     self.aiResponded = true
@@ -87,7 +87,7 @@ class ChatViewModel: ObservableObject {
                     self.aiResponded = true
                     
                 case .failure:
-                    let aiMessage = ChatMessage(text: "Something went wrong", isFromUser: false)
+                    let aiMessage = ChatMessage(text: "Something went wrong. Try again later", isFromUser: false)
                     self.messages.append(aiMessage)
                     self.isTyping = false
                     self.aiResponded = true

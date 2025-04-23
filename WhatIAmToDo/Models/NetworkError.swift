@@ -5,11 +5,7 @@
 //  Created by Юлия Гудошникова on 22.03.2025.
 //
 
-
 enum NetworkError: Error {
-    case invalidResponse
-    case noData
-    case decodingError
-    case unauthorized
-    case unknownStatus(Int)
+    case clientError  // Обобщённые клиентские ошибки (включая невалидный URL, кодирование и пр.)
+    case serverError  // Обобщённые серверные ошибки (HTTP 5xx)
 }

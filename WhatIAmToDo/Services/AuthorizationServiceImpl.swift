@@ -9,122 +9,109 @@ import Foundation
 
 class AuthorizationServiceImpl: AuthorizationService {
     
-    func login(model: AuthRequest, completion: @escaping (Result<LoginResponse, Error>) -> Void) {
-        // URL вашего сервера
-        // URL вашего сервера
-            guard let url = URL(string: "\(Constants.defaultURL)auth/login") else {
-                completion(.failure(NetworkError.invalidResponse))
-                return
-            }
+    func login(model: AuthRequest, completion: @escaping (Result<LoginResponse, NetworkError>) -> Void) {
+        guard let url = URL(string: "\(Constants.defaultURL)auth/login") else {
+            completion(.failure(.clientError))
+            return
+        }
 
-            // Конфигурируем запрос
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-            // Кодируем данные запроса в JSON
-            do {
-                let jsonBody = try JSONEncoder().encode(model)
-                request.httpBody = jsonBody
-            } catch {
-                completion(.failure(error))
-                return
-            }
+        do {
+            let jsonBody = try JSONEncoder().encode(model)
+            request.httpBody = jsonBody
+        } catch {
+            completion(.failure(.clientError))
+            return
+        }
 
-            // Создаём задачу URLSession
-            let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if error != nil {
+                completion(.failure(.clientError))
                 return
             }
             
             guard let data = data else {
-                completion(.failure(NetworkError.noData))
+                completion(.failure(.clientError))
                 return
             }
             
-            // Обработка ответа сервера
             if let httpResponse = response as? HTTPURLResponse {
                 switch httpResponse.statusCode {
                 case 200:
-                    // Обработка успешного входа
                     do {
                         let loginResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
                         completion(.success(loginResponse))
                     } catch {
-                        completion(.failure(NetworkError.decodingError))
+                        completion(.failure(.clientError))
                     }
-                case 401:
-                    completion(.failure(NetworkError.unauthorized))
+                case 400...499:
+                    completion(.failure(.clientError))
+                case 500...599:
+                    completion(.failure(.serverError))
                 default:
-                    completion(.failure(NetworkError.unknownStatus(httpResponse.statusCode)))
+                    completion(.failure(.clientError))
                 }
             } else {
-                completion(.failure(NetworkError.invalidResponse))
+                completion(.failure(.clientError))
             }
         }
-            
-            // Запуск задачи
+        
         task.resume()
     }
     
-    
-    // Метод для получения задач с бэкенда
-    func registration(model: RegistrationRequest, completion: @escaping (Result<LoginResponse, Error>) -> Void) {
+    func registration(model: RegistrationRequest, completion: @escaping (Result<LoginResponse, NetworkError>) -> Void) {
+        guard let url = URL(string: "\(Constants.defaultURL)Auth/register") else {
+            completion(.failure(.clientError))
+            return
+        }
 
-            guard let url = URL(string: "\(Constants.defaultURL)Auth/register") else {
-                completion(.failure(NetworkError.invalidResponse))
-                return
-            }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-            // Конфигурируем запрос
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        do {
+            let jsonBody = try JSONEncoder().encode(model)
+            request.httpBody = jsonBody
+        } catch {
+            completion(.failure(.clientError))
+            return
+        }
 
-            // Кодируем данные запроса в JSON
-            do {
-                let jsonBody = try JSONEncoder().encode(model)
-                request.httpBody = jsonBody
-            } catch {
-                completion(.failure(error))
-                return
-            }
-
-            // Создаём задачу URLSession
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
+            if error != nil {
+                completion(.failure(.clientError))
                 return
             }
             
             guard let data = data else {
-                completion(.failure(NetworkError.noData))
+                completion(.failure(.clientError))
                 return
             }
             
-            // Обработка ответа сервера
             if let httpResponse = response as? HTTPURLResponse {
                 switch httpResponse.statusCode {
                 case 200:
-                    // Обработка успешного входа
                     do {
                         let loginResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
                         completion(.success(loginResponse))
                     } catch {
-                        completion(.failure(NetworkError.decodingError))
+                        completion(.failure(.clientError))
                     }
-                case 401:
-                    completion(.failure(NetworkError.unauthorized))
+                case 400...499:
+                    completion(.failure(.clientError))
+                case 500...599:
+                    completion(.failure(.serverError))
                 default:
-                    completion(.failure(NetworkError.unknownStatus(httpResponse.statusCode)))
+                    completion(.failure(.clientError))
                 }
             } else {
-                completion(.failure(NetworkError.invalidResponse))
+                completion(.failure(.clientError))
             }
         }
-            
-            // Запуск задачи
+        
         task.resume()
     }
 }

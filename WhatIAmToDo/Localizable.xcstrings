@@ -29,7 +29,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Добавь свою задачу"
+            "value" : "Добавь свою цель"
           }
         }
       }
@@ -40,6 +40,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ИИ"
+          }
+        }
+      }
+    },
+    "An error has occurred. Please check your internet connection or try again later." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Произошла ошибка. Пожалуйста, проверьте подключение к Интернету или повторите попытку позже."
           }
         }
       }
@@ -94,6 +104,17 @@
         }
       }
     },
+    "Couldn't process the request" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не получилось обработать запрос"
+          }
+        }
+      }
+    },
     "Custom Days" : {
       "localizations" : {
         "ru" : {
@@ -141,6 +162,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Дедлайн:"
+          }
+        }
+      }
+    },
+    "Delete" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить"
+          }
+        }
+      }
+    },
+    "Delete account" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить аккаунт"
           }
         }
       }
@@ -216,6 +257,7 @@
       }
     },
     "Forgot Password?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -231,6 +273,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Сгенерировать другой план"
+          }
+        }
+      }
+    },
+    "Hello!! I'm here to help you" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Привет!! Я здесь, чтобы помочь тебе"
           }
         }
       }
@@ -316,7 +369,6 @@
       }
     },
     "OK" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -342,6 +394,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Пароли не совпадают"
+          }
+        }
+      }
+    },
+    "Please check the correctness of the entered data." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пожалуйста, проверьте правильность введенных данных."
           }
         }
       }
@@ -520,8 +582,10 @@
         }
       }
     },
+    "Something went wrong" : {
+
+    },
     "Something went wrong. Try again later" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -557,6 +621,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Цели"
+          }
+        }
+      }
+    },
+    "Tell me what do you want to learn today?" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скажи мне, чему ты хочешь научиться сегодня?"
+          }
+        }
+      }
+    },
+    "The request could not be processed." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запрос не удалось обработать."
+          }
+        }
+      }
+    },
+    "Try again" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пробовать снова"
           }
         }
       }
@@ -602,7 +696,14 @@
       }
     },
     "Write your name" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите имя"
+          }
+        }
+      }
     },
     "Your AI assistant" : {
       "localizations" : {

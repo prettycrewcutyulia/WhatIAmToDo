@@ -13,14 +13,19 @@ struct ReminderView: View {
     @State private var customDays: Int = 1
     @State private var reminders: Set<String> = []
     @Environment(\.locale) var locale
+    var isConnectedTgt: Bool
+    var email: String
 
     var body: some View {
         NavigationView {
-            connectedView
-                .background(Color.background)
+            if isConnectedTgt {
+                connectedView
+                    .background(Color.background)
+            } else {
                 
-            disconnectedView
-            .background(Color.background)
+                disconnectedView
+                    .background(Color.background)
+            }
         }
         .navigationTitle("")
     }
@@ -35,7 +40,16 @@ struct ReminderView: View {
         case .custom:
             reminderText = String(format: NSLocalizedString("Reminder in %d days", comment: "A reminder that will occur in a specified number of days"), customDays)
         }
+        if !reminders.contains(reminderText) {
+            
+        }
         reminders.insert(reminderText)
+    }
+    
+    func openTgBot() {
+        if let url = URL(string: "https://t.me/WhatIAmToDoBot?start=\(email)") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
 
     private func deleteReminder(at element: String) {
@@ -46,7 +60,7 @@ struct ReminderView: View {
         VStack {
             Spacer()
             Text("Connect Telegram to receive reminders")
-            Button(action: addReminder) {
+            Button(action: openTgBot) {
                 Text("Connect Telegram")
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity)
@@ -125,8 +139,8 @@ enum ReminderOption {
     case custom
 }
 
-struct ReminderView_Previews: PreviewProvider {
-    static var previews: some View {
-        ReminderView()
-    }
-}
+//struct ReminderView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ReminderView()
+//    }
+//}

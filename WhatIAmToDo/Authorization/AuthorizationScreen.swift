@@ -67,6 +67,20 @@ struct AuthorizationScreen: View {
                 .offset(y: 40)
             }
         }
+        .alert(isPresented: $viewModel.isClientErrorShown) {
+            Alert(
+                title: Text("Please check the correctness of the entered data."),
+                message: Text(viewModel.errorMessage),
+                dismissButton: .default(Text("OK"))
+            )
+        }
+//        .alert(isPresented: $viewModel.isServerErrorShown) {
+//            Alert(
+//                title: Text("Ошибка"),
+//                message: Text(viewModel.errorMessage),
+//                dismissButton: .default(Text("OK"))
+//            )
+//        }
         .fullScreenCover(
             isPresented: $viewModel.isMainShown,
             content: { MainTabBar() }

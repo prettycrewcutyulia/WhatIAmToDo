@@ -25,6 +25,9 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         let authenticationService: any AuthorizationService = AuthorizationServiceImpl();
         DIContainer.shared.register(authenticationService)
         
+        let accountService: any AccountService = AccountServiceImpl(userDefaults: userDefaultsRepository)
+        DIContainer.shared.register(accountService)
+        
         let serviceTask: any TaskService = TaskServiceImpl(userDefaults: userDefaultsRepository)
         DIContainer.shared.register(serviceTask)
         

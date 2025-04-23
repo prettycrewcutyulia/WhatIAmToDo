@@ -18,6 +18,16 @@ struct RegistrationView: View {
     @State private var errorName: String? = nil
     @State private var isEmailValid: Bool = true
     
+    
+    @FocusState private var focusedField: Field?
+    
+    enum Field: Hashable {
+        case nickname
+        case email
+        case password
+        case confirmPassword
+    }
+    
     var onCompleteRegistration: ((RegistrationRequest) -> Void)?
     
     init(onCompleteRegistration: ((RegistrationRequest) -> Void)? = nil) {
@@ -36,6 +46,11 @@ struct RegistrationView: View {
                 .background(Color.gray.opacity(0.2))
                 .cornerRadius(12)
                 .textFieldStyle(PlainTextFieldStyle())
+                .focused($focusedField, equals: .nickname)
+                .submitLabel(.next) // Изменение кнопки отправки на клавиатуре
+                .onSubmit {
+                    focusedField = .email // Переключение фокуса на пароль после ввода
+                }
             
             // Поле для ввода электронной почты
             TextField("Email", text: $email, onEditingChanged: { _ in
@@ -47,6 +62,11 @@ struct RegistrationView: View {
                 .textFieldStyle(PlainTextFieldStyle())
                 .autocapitalization(.none) // Отмена автокапитализации
                 .keyboardType(.emailAddress) // Использование клавиатуры для e-mail
+                .focused($focusedField, equals: .email)
+                .submitLabel(.next) // Изменение кнопки отправки на клавиатуре
+                .onSubmit {
+                    focusedField = .password // Переключение фокуса на пароль после ввода
+                }
             
             // Сообщение об ошибке, если email не валиден
             if !isEmailValid {
@@ -60,6 +80,11 @@ struct RegistrationView: View {
                 .background(Color.gray.opacity(0.2))
                 .cornerRadius(12)
                 .textFieldStyle(PlainTextFieldStyle())
+                .focused($focusedField, equals: .password)
+                .submitLabel(.next) // Изменение кнопки отправки на клавиатуре
+                .onSubmit {
+                    focusedField = .confirmPassword // Переключение фокуса на пароль после ввода
+                }
             
             // Поле для ввода подтверждения пароля
             SecureField("Confirm password", text: $confirmPassword)
@@ -70,6 +95,8 @@ struct RegistrationView: View {
                 .onChange(of: confirmPassword) { _ in
                     passwordsMatch = password == confirmPassword
                 }
+                .focused($focusedField, equals: .confirmPassword)
+                .submitLabel(.done) // Изменение кнопки отправки на клавиатуре
             
             if !passwordsMatch {
                 Text("Passwords do not match")
@@ -105,13 +132,9 @@ struct RegistrationView: View {
             RoundedCornersShape(corners: [.topLeft, .topRight], radius: 33)
                 .fill(Color.white)
         )
-//        .alert(isPresented: $isErrorShown) {
-//            Alert(
-//                title: Text("Something went wrong. Try again later"),
-//                message: Text(errorName ?? ""),
-//                dismissButton: .default(Text("OK"))
-//            )
-//        }
+        .onAppear {
+            focusedField = .nickname // При появлении вью ставим фокус на поле ввода e-mail
+        }
     }
     
     // Функция проверки валидности email

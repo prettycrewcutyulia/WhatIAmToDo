@@ -9,11 +9,13 @@
 import Foundation
 
 final class LaunchScreenStateManager: ObservableObject {
-// TODO: поменять на firstStep как только пройдет этап теста
     @MainActor @Published private(set) var state: LaunchScreenStep = .firstStep
     
     func start() {
-        zeroFetch()
+        Task { @MainActor in
+            self.state = .firstStep
+            zeroFetch()
+        }
     }
 
     @MainActor func dismiss() {
@@ -36,6 +38,8 @@ final class LaunchScreenStateManager: ObservableObject {
             if case .success(let goals) = result {
                 fetchTaskSuccess = true
                 dispatchGroup.leave()
+            } else {
+                dispatchGroup.leave()
             }
         })
         
@@ -45,12 +49,18 @@ final class LaunchScreenStateManager: ObservableObject {
             if case .success(let filters) = result {
                 fetchFiltersSuccess = true
                 dispatchGroup.leave()
+            } else {
+                dispatchGroup.leave()
             }
         })
         dispatchGroup.notify(queue: .main) {
             if fetchTaskSuccess && fetchFiltersSuccess {
                 Task { @MainActor in
                     self.dismiss()
+                }
+            } else {
+                Task { @MainActor in
+                    self.state = .error
                 }
             }
         }

@@ -9,7 +9,7 @@ import SwiftUI
 import Lottie
 
 struct AccountView: View {
-    @ObservedObject private var viewModel = AccountViewModel(userDefaults: DIContainer.shared.resolve())
+    @ObservedObject private var viewModel = AccountViewModel(userDefaults: DIContainer.shared.resolve(), accountService:  DIContainer.shared.resolve())
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 26) {
@@ -23,6 +23,7 @@ struct AccountView: View {
             .padding(20)
             .background(Color.background)
         }
+        .fullScreenCover(isPresented: $viewModel.isLoginViewPresented, content: { AuthorizationScreen() })
     }
 }
 
@@ -85,7 +86,7 @@ struct ProfileView: View {
                                   )
                 
                 TextField("Write your email", text: $viewModel.mail)
-                    .font(.targetFont(size: 11))
+                    .font(.targetFont(size: 10))
                     .foregroundStyle(.hint)
                     .overlay(
                                       RoundedRectangle(cornerRadius: 8)
@@ -110,10 +111,17 @@ struct ProfileView: View {
         VStack {
             Image(systemName:  isEditingName ? "checkmark" :"pencil")
                 .onTapGesture {
+                    if isEditingName {
+                        viewModel.updateAccount()
+                    }
                     isEditingName.toggle()
                 }
             Spacer()
-            Image("LogOut")
+            Button (action: {
+                viewModel.logout()
+            }) {
+                Image("LogOut")
+            }
         }
         .padding(.vertical, 14)
     }
@@ -131,6 +139,8 @@ struct SettingsView: View {
             notificationMenuView
             
             languageMenuView
+            
+            deleteAccountView
         }
         .foregroundStyle(Color.accentColor)
     }
@@ -175,7 +185,7 @@ struct SettingsView: View {
     }
     
     var notificationMenuView: some View {
-        NavigationLink(destination: ReminderView().navigationTitle("")) {
+        NavigationLink(destination: ReminderView(isConnectedTgt: viewModel.isConnectedTg, email: viewModel.mail).navigationTitle("")) {
             HStack {
                 Text("Notification")
                     .font(.targetFont(size: 16))
@@ -190,6 +200,25 @@ struct SettingsView: View {
             .cornerRadius(12)
         }
         .navigationTitle("")
+    }
+    
+    var deleteAccountView: some View {
+        Button(action: {
+            viewModel.deleteAccount()
+        }) {
+            HStack {
+                Text("Delete account")
+                    .font(.targetFont(size: 16))
+                    .fontWeight(.heavy)
+                    .fontDesign(.rounded)
+                Spacer()
+
+                Image(systemName: "chevron.right")
+            }
+            .padding(15)
+            .background(Color.white)
+            .cornerRadius(12)
+        }
     }
 }
 

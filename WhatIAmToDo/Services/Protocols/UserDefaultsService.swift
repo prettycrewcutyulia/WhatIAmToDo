@@ -29,4 +29,7 @@ protocol UserDefaultsService: ObservableObject {
     
     func getUserIdAndUserToken() -> (userId: Int, userToken: String)?
     func getUserData() -> (name: String, email: String)?
+    
+    func setImage(_ image: UIImage?)
+    func getImage() -> UIImage?
 }

@@ -42,7 +42,7 @@ class TaskServiceImpl: TaskService {
             
             // Проверяем, что url был успешно сформирован
             guard let url = urlComponents.url else {
-                completion(.failure(NetworkError.invalidResponse))
+                completion(.failure(NSError(domain: "Invalid Response", code: -1, userInfo: nil)))
                 return
             }
             
@@ -514,7 +514,7 @@ class TaskServiceImpl: TaskService {
     
     func deleteGoalById(id: Int, completion: @escaping (Result<String, Error>) -> Void) {
         // URL эндпоинта для удаления
-        let baseURL = "http://localhost:5112/api/Goals/delete?id=\(id)"
+        let baseURL = "http://localhost:5112/api/Goals/delete/\(id)"
         
         guard let url = URL(string: baseURL) else {
             completion(.failure(NSError(domain: "Invalid URL", code: 1, userInfo: nil)))
@@ -543,7 +543,14 @@ class TaskServiceImpl: TaskService {
             
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
                 if let data = data, let message = String(data: data, encoding: .utf8) {
-                    completion(.success(message))
+                    self.fetchTasks(completion: { res in
+                        switch res {
+                        case .success(_):
+                            completion(.success("success"))
+                        case .failure(let error):
+                            completion(.failure(error))
+                        }
+                    })
                 } else {
                     completion(.failure(NSError(domain: "Invalid response data", code: 2, userInfo: nil)))
                 }
@@ -553,8 +560,6 @@ class TaskServiceImpl: TaskService {
         }
         
         task.resume()
-        
-        fetchFilters(completion: { _ in })
     }
 }
 

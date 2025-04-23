@@ -16,26 +16,29 @@ struct WhatIAmToDoApp: App {
     init() {
         setupDependencies()
     }
-
+    
     private mutating func setupDependencies() {
         _launchScreenState = StateObject<LaunchScreenStateManager>(wrappedValue: DIContainer.shared.resolve())
     }
-
+    
     var body: some Scene {
         WindowGroup {
             ZStack {
-                if launchScreenState.state == .secondStep || launchScreenState.state == .finished {
-                    if usersDefaultService.isUserRegistered() {
+                if usersDefaultService.isUserRegistered() {
+                    if launchScreenState.state == .secondStep || launchScreenState.state == .finished {
                         MainTabBar()
-                    } else {
-                        AuthorizationScreen()
                     }
-                }
-                if launchScreenState.state != .finished {
-                    LaunchScreenView()
-                        .onAppear {
-                            launchScreenState.start()
-                        }
+                    if launchScreenState.state != .finished {
+                        LaunchScreenView()
+                            .onAppear {
+                                launchScreenState.start()
+                            }
+                    }
+                    if launchScreenState.state == .error {
+                        ErrorView(retryAction:  { launchScreenState.start() })
+                    }
+                } else {
+                    AuthorizationScreen()
                 }
             }
             .environment(\.locale, Locale(identifier: usersDefaultService.selectedLanguage))

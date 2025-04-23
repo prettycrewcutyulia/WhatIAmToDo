@@ -101,4 +101,18 @@ class UserDefaultsServiceImpl: UserDefaultsService {
         return nil
     }
     
+    func setImage(_ image: UIImage?) {
+        guard let image = image else {
+            defaults.removeObject(forKey: "avatar")
+            return
+        }
+        
+        let imageData = image.pngData()
+        defaults.set(imageData, forKey: "avatar")
+    }
+    func getImage() -> UIImage? {
+        guard let imageData = defaults.data(forKey: "avatar") else { return nil }
+        return UIImage(data: imageData)
+    }
+    
 }
