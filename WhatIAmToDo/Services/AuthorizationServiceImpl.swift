@@ -9,6 +9,12 @@ import Foundation
 
 class AuthorizationServiceImpl: AuthorizationService {
     
+    private let taskService: TaskService
+    
+    init(taskService: TaskService) {
+        self.taskService = taskService
+    }
+    
     func login(model: AuthRequest, completion: @escaping (Result<LoginResponse, NetworkError>) -> Void) {
         guard let url = URL(string: "\(Constants.defaultURL)auth/login") else {
             completion(.failure(.clientError))
@@ -43,7 +49,19 @@ class AuthorizationServiceImpl: AuthorizationService {
                 case 200:
                     do {
                         let loginResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
-                        completion(.success(loginResponse))
+                        let group = DispatchGroup()
+                        group.enter()
+                        self.taskService.fetchTasks(completion: {
+                            res in
+                            group.leave()
+                        })
+                        group.enter()
+                        self.taskService.fetchFilters(completion: { res in
+                            group.leave()
+                        })
+                        group.notify(queue: .main) {
+                            completion(.success(loginResponse))
+                        }
                     } catch {
                         completion(.failure(.clientError))
                     }

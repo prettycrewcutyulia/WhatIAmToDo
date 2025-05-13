@@ -33,8 +33,8 @@
 		488ACDBF2D2952160086AE8A /* ClashDisplay-Variable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ClashDisplay-Variable.ttf"; sourceTree = "<group>"; };
 		488ACDC22D2952160086AE8A /* FFL.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = FFL.txt; sourceTree = "<group>"; };
 		4893C5A82D2883FE002D8C10 /* WhatIAmToDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhatIAmToDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4893C5BA2D288401002D8C10 /* WhatIAmToDoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhatIAmToDoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4893C5C42D288401002D8C10 /* WhatIAmToDoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhatIAmToDoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4893C5BA2D288401002D8C10 /* WhatIAmToDoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = WhatIAmToDoTests.xctest; path = "/Users/prettycrewcut/Desktop/HSE/Diplom/WhatIAmToDo/build/Debug-iphoneos/WhatIAmToDo.app/PlugIns/WhatIAmToDoTests.xctest"; sourceTree = "<absolute>"; };
+		4893C5C42D288401002D8C10 /* WhatIAmToDoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = WhatIAmToDoUITests.xctest; path = "/Users/prettycrewcut/Desktop/HSE/Diplom/WhatIAmToDo/build/Debug-iphoneos/WhatIAmToDoUITests-Runner.app/PlugIns/WhatIAmToDoUITests.xctest"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -54,16 +54,6 @@
 				488ACDCC2D2958C50086AE8A /* Exceptions for "WhatIAmToDo" folder in "WhatIAmToDo" target */,
 			);
 			path = WhatIAmToDo;
-			sourceTree = "<group>";
-		};
-		4893C5BD2D288401002D8C10 /* WhatIAmToDoTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = WhatIAmToDoTests;
-			sourceTree = "<group>";
-		};
-		4893C5C72D288401002D8C10 /* WhatIAmToDoUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = WhatIAmToDoUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -131,8 +121,6 @@
 			isa = PBXGroup;
 			children = (
 				4893C5AA2D2883FE002D8C10 /* WhatIAmToDo */,
-				4893C5BD2D288401002D8C10 /* WhatIAmToDoTests */,
-				4893C5C72D288401002D8C10 /* WhatIAmToDoUITests */,
 				4893C5A92D2883FE002D8C10 /* Products */,
 				488ACDC42D2952160086AE8A /* ClashDisplay_Complete */,
 			);
@@ -142,8 +130,6 @@
 			isa = PBXGroup;
 			children = (
 				4893C5A82D2883FE002D8C10 /* WhatIAmToDo.app */,
-				4893C5BA2D288401002D8C10 /* WhatIAmToDoTests.xctest */,
-				4893C5C42D288401002D8C10 /* WhatIAmToDoUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -187,9 +173,6 @@
 			dependencies = (
 				4893C5BC2D288401002D8C10 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				4893C5BD2D288401002D8C10 /* WhatIAmToDoTests */,
-			);
 			name = WhatIAmToDoTests;
 			packageProductDependencies = (
 			);
@@ -209,9 +192,6 @@
 			);
 			dependencies = (
 				4893C5C62D288401002D8C10 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				4893C5C72D288401002D8C10 /* WhatIAmToDoUITests */,
 			);
 			name = WhatIAmToDoUITests;
 			packageProductDependencies = (

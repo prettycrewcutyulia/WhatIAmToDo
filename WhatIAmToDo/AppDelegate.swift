@@ -22,7 +22,10 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         let userDefaultsRepository: any UserDefaultsService = UserDefaultsServiceImpl.shared
         DIContainer.shared.register(userDefaultsRepository)
         
-        let authenticationService: any AuthorizationService = AuthorizationServiceImpl();
+        let serviceTask: any TaskService = TaskServiceImpl(userDefaults: userDefaultsRepository)
+        DIContainer.shared.register(serviceTask)
+        
+        let authenticationService: any AuthorizationService = AuthorizationServiceImpl(taskService: serviceTask);
         DIContainer.shared.register(authenticationService)
         
         let reminderService: any ReminderService = ReminderServiceImpl(userDefaults: userDefaultsRepository)
@@ -30,9 +33,6 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         
         let accountService: any AccountService = AccountServiceImpl(userDefaults: userDefaultsRepository)
         DIContainer.shared.register(accountService)
-        
-        let serviceTask: any TaskService = TaskServiceImpl(userDefaults: userDefaultsRepository)
-        DIContainer.shared.register(serviceTask)
         
         let launchService = LaunchScreenStateManager()
         DIContainer.shared.register(launchService)
