@@ -37,6 +37,26 @@ struct ChatView: View {
             // Chat history
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
+                    HStack{
+                        Image(systemName: "lasso.badge.sparkles") // AI icon
+                            .font(.largeTitle)
+                            .foregroundColor(.accentColor)
+                        Text("Hello!! I'm here to help you")
+                            .padding()
+                            .background(Color(.white))
+                            .foregroundColor(.accent)
+                            .cornerRadius(8)
+                    }
+                    HStack{
+                        Image(systemName: "lasso.badge.sparkles") // AI icon
+                            .font(.largeTitle)
+                            .foregroundColor(.accentColor)
+                        Text("Tell me what do you want to learn today?")
+                            .padding()
+                            .background(Color(.white))
+                            .foregroundColor(.accent)
+                            .cornerRadius(8)
+                    }
                     ForEach(viewModel.messages) { message in
                         ChatBubble(text: message.text, isFromUser: message.isFromUser)
                     }

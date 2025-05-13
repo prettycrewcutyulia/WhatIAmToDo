@@ -67,9 +67,6 @@ class TaskServiceImpl: TaskService {
                 do {
                     let decoder = JSONDecoder()
                     
-                    // Создаем ISO8601DateFormatter с поддержкой миллисекунд
-//                    let formatter = ISO8601DateFormatter()
-//                    formatter.formatOptions = [.withInternetDateTime]
                     let dateFormatter = DateFormatter()
                     dateFormatter.locale = Locale(identifier: "en_US_POSIX")
                     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
@@ -130,7 +127,7 @@ class TaskServiceImpl: TaskService {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.setValue("Bearer \(userData.userToken)", forHTTPHeaderField: "Authorization")
             
-            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
                 if let error = error {
                     completion(.failure(error))
                     return

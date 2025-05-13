@@ -185,7 +185,7 @@ struct SettingsView: View {
     }
     
     var notificationMenuView: some View {
-        NavigationLink(destination: ReminderView(isConnectedTgt: viewModel.isConnectedTg, email: viewModel.mail).navigationTitle("")) {
+        NavigationLink(destination: ReminderView(service: DIContainer.shared.resolve(), isConnectedTgt: viewModel.isConnectedTg, email: viewModel.mail).navigationTitle("")) {
             HStack {
                 Text("Notification")
                     .font(.targetFont(size: 16))

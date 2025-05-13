@@ -54,7 +54,6 @@ class TaskViewModel: ObservableObject {
     
     func addStep() {
         if !newStepTitle.isEmpty {
-            // TODO: Перепроверить
             steps.append(Step(id: UUID().hashValue, title: newStepTitle))
             newStepTitle = ""
             showNewStepField = false
@@ -92,7 +91,7 @@ class TaskViewModel: ObservableObject {
     func saveGoal(dismiss: @escaping () -> Void) {
         var userId = userDefaultsService.getUserIdAndUserToken()?.userId
         guard let userId else {
-            // TODO: Вернуть ошибку
+            self.isErrorShown.toggle()
             return
         }
         taskService.createGoal(
@@ -122,7 +121,11 @@ class TaskViewModel: ObservableObject {
     func updateGoal(dismiss: @escaping () -> Void) {
         if let goalId {
             var userId = userDefaultsService.getUserIdAndUserToken()?.userId
-            guard let userId else { return  // TODO: Вернуть ошибку
+            guard let userId else {
+                Task{ @MainActor in
+                    self.isErrorShown.toggle()
+               }
+                return
             }
             taskService.updateGoal(
                 id: goalId,

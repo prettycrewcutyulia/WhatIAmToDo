@@ -4,6 +4,9 @@
     "" : {
 
     },
+    "%lld" : {
+
+    },
     "Add Reminder" : {
       "localizations" : {
         "ru" : {
@@ -124,6 +127,9 @@
           }
         }
       }
+    },
+    "day(s)" : {
+
     },
     "Days" : {
       "extractionState" : "manual",
@@ -252,17 +258,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Найти свою цель"
-          }
-        }
-      }
-    },
-    "Forgot Password?" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Забыли пароль?"
           }
         }
       }
@@ -448,6 +443,9 @@
           }
         }
       }
+    },
+    "Reminder in" : {
+
     },
     "Reminder in %d days" : {
       "extractionState" : "manual",

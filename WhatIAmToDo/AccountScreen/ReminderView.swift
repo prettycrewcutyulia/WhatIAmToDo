@@ -11,10 +11,17 @@ import SwiftUI
 struct ReminderView: View {
     @State private var reminderOption: ReminderOption = .day
     @State private var customDays: Int = 1
-    @State private var reminders: Set<String> = []
+    @State private var reminders: Set<Reminder> = []
+    private var service: ReminderService
     @Environment(\.locale) var locale
     var isConnectedTgt: Bool
     var email: String
+    
+    init(service: ReminderService, isConnectedTgt: Bool, email: String) {
+        self.service = service
+        self.isConnectedTgt = isConnectedTgt
+        self.email = email
+    }
 
     var body: some View {
         NavigationView {
@@ -28,22 +35,27 @@ struct ReminderView: View {
             }
         }
         .navigationTitle("")
+        .onAppear {
+            getReminders()
+        }
+        .onDisappear {
+            saveReminders()
+        }
     }
-
+    
     private func addReminder() {
-        let reminderText: String
         switch reminderOption {
         case .day:
-            reminderText = String(format: NSLocalizedString("Reminder in %d days", comment: "A reminder that will occur in a specified number of days"), 1)
+            customDays = 1
         case .week:
-            reminderText = NSLocalizedString("Reminder in 1 week", comment: "A reminder that will occur in a specified number of days")
+            customDays = 7
         case .custom:
-            reminderText = String(format: NSLocalizedString("Reminder in %d days", comment: "A reminder that will occur in a specified number of days"), customDays)
+            break
         }
-        if !reminders.contains(reminderText) {
-            
+        if !reminders.contains { $0.daysCount == customDays } {
+            reminders.insert(Reminder(reminderId: nil, daysCount: customDays))
         }
-        reminders.insert(reminderText)
+        customDays = 1
     }
     
     func openTgBot() {
@@ -52,7 +64,10 @@ struct ReminderView: View {
         }
     }
 
-    private func deleteReminder(at element: String) {
+    private func deleteReminder(at element: Reminder) {
+        if let id = element.reminderId {
+            service.deleteReminder(by: element.reminderId!, completion:  { res in })
+        }
         reminders.remove(element)
     }
     
@@ -114,7 +129,9 @@ struct ReminderView: View {
             VStack(alignment: .leading) {
                 ForEach(Array(reminders), id: \.self) { reminder in
                     HStack {
-                        Text(reminder)
+                        Text("Reminder in")
+                        Text("\(reminder.daysCount)")
+                        Text("day(s)")
                         Spacer()
                         Image(systemName: "trash")
                             .onTapGesture { deleteReminder(at: reminder) }
@@ -131,6 +148,25 @@ struct ReminderView: View {
             Spacer()
         }
     }
+    
+    private func getReminders() {
+        service.getReminders(completion: { result in
+            switch result {
+            case .success(let res):
+                reminders = Set(res)
+            default:
+                reminders = []
+            }
+        })
+    }
+    
+    private func saveReminders() {
+        for reminder in reminders {
+            if reminder.reminderId == nil {
+                service.addReminder(reminder) { result in}
+            }
+        }
+    }
 }
 
 enum ReminderOption {
@@ -138,9 +174,3 @@ enum ReminderOption {
     case week
     case custom
 }
-
-//struct ReminderView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ReminderView()
-//    }
-//}

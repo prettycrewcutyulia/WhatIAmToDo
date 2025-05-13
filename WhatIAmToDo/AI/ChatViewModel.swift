@@ -10,10 +10,7 @@ import Combine
 
 class ChatViewModel: ObservableObject {
     @Published var userInput = ""
-    @Published var messages: [ChatMessage] = [
-        ChatMessage(text: NSLocalizedString("Hello!! I'm here to help you", comment: ""), isFromUser: false),
-        ChatMessage(text: NSLocalizedString("Tell me what do you want to learn today?", comment: ""), isFromUser: false)
-    ]
+    @Published var messages: [ChatMessage] = []
     @Published var isTyping = false
     @Published var aiResponded = false
     
@@ -98,10 +95,7 @@ class ChatViewModel: ObservableObject {
 
     func resetChat() {
         aiResponded = false
-        messages = [
-            ChatMessage(text: "Hello! I'm here to help you", isFromUser: false),
-            ChatMessage(text: "Tell me what do you want to learn today?", isFromUser: false)
-        ]
+        messages = []
         userInput = ""
         request = nil
         
@@ -111,7 +105,6 @@ class ChatViewModel: ObservableObject {
         
         var user = userDefaultsService.getUserIdAndUserToken()
         guard let id = user?.userId else {
-            // TODO: добавить обработку ошибок
             return
         }
         if let AIGoalResponse {

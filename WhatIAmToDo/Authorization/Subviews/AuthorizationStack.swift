@@ -61,21 +61,6 @@ struct AuthorizationStack: View {
                     .cornerRadius(13)
             }
             .disabled(email.isEmpty || password.isEmpty)
-            
-//            // Кнопка "Забыли пароль"
-//            Button(action: {
-//                isForgotPasswordPresented.toggle()
-//            }) {
-//                Text("Forgot Password?")
-//                    .frame(maxWidth: .infinity)
-//                    .foregroundColor(Color.secondary)
-//            }
-//            .sheet(isPresented: $isForgotPasswordPresented) {
-//                EmailInputSheet(onSubmit: { email in
-//                    didTapForgotPassword(email)
-//                })
-//                .presentationDetents([.height(250)])
-//            }
         }
         .padding(.horizontal, 28)
         .padding(.vertical, 33)

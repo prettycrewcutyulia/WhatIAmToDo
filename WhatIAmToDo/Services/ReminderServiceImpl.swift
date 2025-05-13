@@ -8,13 +8,7 @@
 
 import Foundation
 
-struct Reminder: Codable {
-    let reminderId: Int?
-    let userId: Int
-    let daysCount: Int
-}
-
-struct ReminderServiceImpl {
+struct ReminderServiceImpl: ReminderService {
     private let baseURL = "http://localhost:5112/api/Reminders"
     private var userDefaults: any UserDefaultsService
     
@@ -22,16 +16,17 @@ struct ReminderServiceImpl {
         self.userDefaults = userDefaults
     }
 
-    func getReminders(by userId: Int, completion: @escaping (Result<[Reminder], Error>) -> Void) {
-        guard let url = URL(string: "\(baseURL)/\(userId)") else {
-            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
-            return
-        }
+    func getReminders(completion: @escaping (Result<[Reminder], Error>) -> Void) {
         var userData = self.userDefaults.getUserIdAndUserToken()
         
         guard let userData else {
             
             completion(.failure(NSError(domain: "Invalid Response", code: -1, userInfo: nil)))
+            return
+        }
+
+        guard let url = URL(string: "\(baseURL)/\(userData.userId)") else {
+            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
             return
         }
 
@@ -77,9 +72,11 @@ struct ReminderServiceImpl {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(userData.userToken)", forHTTPHeaderField: "Authorization")
+        
+        let requestReminder = ReminderRequest(userId: userData.userId, daysCount: reminder.daysCount)
 
         do {
-            let jsonData = try JSONEncoder().encode(reminder)
+            let jsonData = try JSONEncoder().encode(requestReminder)
             request.httpBody = jsonData
         } catch {
             completion(.failure(error))

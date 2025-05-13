@@ -74,13 +74,6 @@ struct AuthorizationScreen: View {
                 dismissButton: .default(Text("OK"))
             )
         }
-//        .alert(isPresented: $viewModel.isServerErrorShown) {
-//            Alert(
-//                title: Text("Ошибка"),
-//                message: Text(viewModel.errorMessage),
-//                dismissButton: .default(Text("OK"))
-//            )
-//        }
         .fullScreenCover(
             isPresented: $viewModel.isMainShown,
             content: { MainTabBar() }
